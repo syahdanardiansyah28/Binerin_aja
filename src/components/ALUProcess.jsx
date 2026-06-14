@@ -18,22 +18,21 @@ export default function ALUProcess({ result }) {
     { label: 'Output', value: result?.binaryResult || '----' },
   ];
   const nodes = operation === 'NOT' ? notNodes : operation === 'INC' || operation === 'DEC' ? incDecNodes : binaryNodes;
-  const gridClass = nodes.length === 3
-    ? 'grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center'
-    : 'grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:items-center';
-
   return (
-    <section className="cpu-card rounded p-5">
+    <section className="cpu-card w-full max-w-full min-w-0 rounded p-4 md:p-5">
       <h3 className="mb-5 text-lg font-semibold text-white">ALU Process Visualization</h3>
-      <div className={gridClass}>
+      <div className="flex min-w-0 flex-col gap-3 md:flex-row md:items-center">
         {nodes.map((node, index) => (
-          <div key={`${node.label}-${index}`} className="contents">
-            <div className="mono-chip rounded p-4 text-center">
+          <div key={`${node.label}-${index}`} className="flex min-w-0 flex-col items-center gap-3 md:contents">
+            <div className="mono-chip w-full min-w-0 rounded p-3 text-center md:p-4">
               <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/60">{node.label}</p>
-              <p className="mt-2 break-all font-mono text-xl font-bold text-cyan-100">{node.value}</p>
+              <p className="mt-2 break-all font-mono text-sm font-bold text-cyan-100 md:text-xl">{node.value}</p>
             </div>
             {index < nodes.length - 1 && (
-              <div className="hidden font-mono text-2xl text-cyan-200/70 md:block">-&gt;</div>
+              <>
+                <div className="font-mono text-xl text-cyan-200/70 md:hidden">↓</div>
+                <div className="hidden shrink-0 font-mono text-2xl text-cyan-200/70 md:block">-&gt;</div>
+              </>
             )}
           </div>
         ))}

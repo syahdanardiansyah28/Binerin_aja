@@ -27,10 +27,10 @@ export default function BitTable({ result }) {
   };
 
   return (
-    <section className="cpu-card rounded p-5">
+    <section className="cpu-card w-full max-w-full min-w-0 rounded p-4 md:p-5">
       <h3 className="mb-4 text-lg font-semibold text-white">Bit by Bit Table</h3>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[520px] border-collapse text-sm">
+      <div className="max-w-full overflow-x-auto">
+        <table className="min-w-max border-collapse text-sm">
           <thead>
             <tr className="border-b border-cyan-300/20 text-left text-cyan-100">
               {headers.map((head) => (

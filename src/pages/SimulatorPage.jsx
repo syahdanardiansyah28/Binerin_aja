@@ -30,11 +30,11 @@ export default function SimulatorPage() {
   };
 
   return (
-    <div className="mx-auto grid max-w-7xl gap-5">
+    <div className="mx-auto grid w-full max-w-full min-w-0 gap-5 overflow-x-hidden px-0 md:px-0 xl:max-w-7xl">
       <Header />
 
-      <div className="grid gap-5 xl:grid-cols-[1fr_360px]">
-        <div className="grid gap-5">
+      <div className="grid w-full min-w-0 gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="grid min-w-0 gap-5">
           <InputRegister
             registerA={registerA}
             registerB={registerB}
@@ -55,10 +55,10 @@ export default function SimulatorPage() {
           <BitTable result={result} />
         </div>
 
-        <div className="grid content-start gap-5">
+        <div className="grid min-w-0 content-start gap-5">
           <ModePanel mode={mode} onChangeMode={setMode} />
 
-          <section className="cpu-card rounded p-5">
+          <section className="cpu-card min-w-0 rounded p-4 md:p-5">
             <h3 className="text-lg font-semibold text-white">Register Monitor</h3>
             <div className="mt-4 grid gap-3">
               <div className="rounded border border-white/10 bg-white/[0.035] p-4">
@@ -84,10 +84,10 @@ export default function SimulatorPage() {
             </div>
           </section>
 
-          <section className="cpu-card rounded p-5">
+          <section className="cpu-card min-w-0 rounded p-4 md:p-5">
             <h3 className="text-lg font-semibold text-white">Truth Table Preview</h3>
-            <div className="mt-4 overflow-hidden rounded border border-cyan-300/20">
-              <table className="w-full text-left font-mono text-xs">
+            <div className="mt-4 overflow-x-auto rounded border border-cyan-300/20">
+              <table className="w-full min-w-[300px] text-left font-mono text-xs">
                 <thead className="bg-cyan-300/10 text-cyan-100">
                   <tr>
                     <th className="p-2">A</th>
