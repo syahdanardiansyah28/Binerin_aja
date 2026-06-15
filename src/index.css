@@ -48,3 +48,30 @@ body::before {
   border: 1px solid rgba(103, 232, 249, 0.24);
   background: rgba(8, 18, 37, 0.78);
 }
+
+.circuit-controls {
+  border: 1px solid rgba(103, 232, 249, 0.25);
+  background: rgba(2, 6, 23, 0.88);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
+}
+
+.circuit-controls button {
+  border-bottom: 1px solid rgba(103, 232, 249, 0.16);
+  background: rgba(8, 18, 37, 0.94);
+  color: #a5f3fc;
+  fill: #a5f3fc;
+}
+
+.circuit-controls button svg {
+  fill: #a5f3fc;
+}
+
+.circuit-controls button:hover {
+  background: rgba(34, 211, 238, 0.14);
+}
+
+.react-flow__edge.selected path,
+.react-flow__edge:focus path {
+  stroke: #67e8f9;
+  stroke-width: 3;
+}
