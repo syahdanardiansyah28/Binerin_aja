@@ -86,16 +86,16 @@ export default function LogicGateSymbol({ gate, inputA, inputB, output, title = 
         </g>
 
         <g fontFamily="SF Mono, Monaco, Consolas, monospace" fill="rgb(var(--color-text))">
-          <text x="36" y={isNot ? 122 : 91} fontSize="12" fontWeight="700">A</text>
-          <text x="36" y={isNot ? 152 : 122} fontSize={inputFontSize}>{inputA}</text>
+          <text x="34" y={isNot ? 108 : 78} fontSize="10" fontWeight="700" fill="rgb(var(--color-muted))">INPUT A</text>
+          <text x="34" y={isNot ? 138 : 108} fontSize={inputFontSize + 3} fontWeight="700">{inputA}</text>
           {!isNot && (
             <>
-              <text x="36" y="156" fontSize="12" fontWeight="700">B</text>
-              <text x="36" y="187" fontSize={inputFontSize}>{inputB}</text>
+              <text x="34" y="150" fontSize="10" fontWeight="700" fill="rgb(var(--color-muted))">INPUT B</text>
+              <text x="34" y="180" fontSize={inputFontSize + 3} fontWeight="700">{inputB}</text>
             </>
           )}
-          <text x="336" y="113" fontSize="12" fontWeight="700">X</text>
-          <text x="394" y="137" textAnchor="end" fontSize={outputFontSize} fontWeight="700">{outputText}</text>
+          <text x="350" y="110" fontSize="10" fontWeight="700" fill="rgb(var(--color-muted))">OUTPUT X</text>
+          <text x="386" y="146" textAnchor="middle" fontSize={outputFontSize + 3} fontWeight="700">{outputText}</text>
           <text x="190" y="222" textAnchor="middle" fontSize="13" fill="rgb(var(--color-accent-hover))">{gate}</text>
         </g>
       </svg>
