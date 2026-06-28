@@ -2,6 +2,7 @@ import Button from '../components/common/Button';
 import Container from '../components/common/Container';
 import SectionTitle from '../components/common/SectionTitle';
 import EvolutionSection from '../components/landing/EvolutionSection';
+import LogicGateShowcase from '../components/landing/LogicGateShowcase';
 import { simulatorTabs } from '../features/simulator/data/simulatorTabs';
 
 export default function LandingPage({ onNavigate }) {
@@ -21,7 +22,7 @@ export default function LandingPage({ onNavigate }) {
             </div>
           </div>
 
-          <CircuitPreview />
+          <LogicGateShowcase />
         </Container>
       </section>
 
@@ -51,34 +52,5 @@ export default function LandingPage({ onNavigate }) {
         </Container>
       </section>
     </>
-  );
-}
-
-function CircuitPreview() {
-  const nodes = [
-    ['A', '0101'],
-    ['B', '0011'],
-    ['Gate', 'XOR'],
-    ['Adder', '1000'],
-    ['ALU', 'ADD'],
-  ];
-
-  return (
-    <div className="relative min-h-[360px] overflow-hidden rounded-lg border border-linear-border/70 bg-linear-surface p-5">
-      <div className="absolute inset-x-0 top-1/2 h-px bg-linear-accent/40" />
-      <div className="relative grid h-full grid-cols-1 gap-4 sm:grid-cols-5 sm:items-center">
-        {nodes.map(([label, value], index) => (
-          <div key={label} className="relative rounded-lg border border-linear-border/70 bg-linear-surface2 p-4">
-            <p className="font-mono text-xs text-linear-muted">{label}</p>
-            <p className="mt-3 break-all font-mono text-2xl text-linear-strong">{value}</p>
-            {index < nodes.length - 1 && (
-              <span className="absolute -bottom-4 left-1/2 font-mono text-linear-muted sm:-right-5 sm:bottom-auto sm:left-auto sm:top-1/2">
-                -&gt;
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
