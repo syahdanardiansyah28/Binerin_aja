@@ -45,46 +45,50 @@ const gatePaths = {
 export default function LogicGateSymbol({ gate, inputA, inputB, output }) {
   const isNot = gate === 'NOT';
   const outputStart = ['NAND', 'NOR', 'XNOR'].includes(gate) ? 277 : gate === 'NOT' ? 264 : 250;
+  const outputText = String(output ?? '-');
+  const inputTextLength = Math.max(String(inputA ?? '-').length, String(inputB ?? '-').length);
+  const inputFontSize = inputTextLength > 8 ? 11 : inputTextLength > 4 ? 12 : 13;
+  const outputFontSize = outputText.length > 8 ? 14 : outputText.length > 4 ? 17 : 20;
 
   return (
     <div className="min-w-0 overflow-hidden rounded-lg border border-linear-border/70 bg-linear-surface p-3 sm:p-4">
       <svg className="h-auto w-full" viewBox="0 0 420 260" role="img" aria-label={`${gate} gate symbol`}>
         <rect width="420" height="260" rx="8" fill="rgb(var(--color-surface))" />
         <g stroke="rgb(var(--color-strong) / 0.06)" strokeWidth="1">
-          <path d="M0 52 H420" />
-          <path d="M0 208 H420" />
-          <path d="M52 0 V260" />
-          <path d="M368 0 V260" />
+          <path d="M18 52 H402" />
+          <path d="M18 208 H402" />
+          <path d="M70 22 V238" />
+          <path d="M326 22 V238" />
         </g>
 
-        <g stroke="rgb(var(--color-accent-hover))" strokeWidth="4" strokeLinecap="round" fill="none">
+        <g stroke="rgb(var(--color-accent-hover))" strokeWidth="3.5" strokeLinecap="round" fill="none">
           {isNot ? (
-            <path d="M58 130 H132" />
+            <path d="M82 130 H132" />
           ) : (
             <>
-              <path d="M58 98 H130" />
-              <path d="M58 162 H130" />
+              <path d="M82 98 H130" />
+              <path d="M82 162 H130" />
             </>
           )}
-          <path d={`M${outputStart} 130 H362`} />
+          <path d={`M${outputStart} 130 H326`} />
         </g>
 
-        <g stroke="rgb(var(--color-accent))" strokeWidth="4" fill="rgb(var(--color-accent) / 0.14)">
+        <g stroke="rgb(var(--color-accent))" strokeWidth="3.5" fill="rgb(var(--color-accent) / 0.14)">
           {gatePaths[gate]}
         </g>
 
-        <g fontFamily="SF Mono, Monaco, Consolas, monospace" fontSize="15" fill="rgb(var(--color-text))">
-          <text x="24" y={isNot ? 124 : 92}>A</text>
-          <text x="24" y={isNot ? 145 : 156}>{inputA}</text>
+        <g fontFamily="SF Mono, Monaco, Consolas, monospace" fill="rgb(var(--color-text))">
+          <text x="36" y={isNot ? 122 : 91} fontSize="12" fontWeight="700">A</text>
+          <text x="36" y={isNot ? 152 : 122} fontSize={inputFontSize}>{inputA}</text>
           {!isNot && (
             <>
-              <text x="24" y="183">B</text>
-              <text x="24" y="204">{inputB}</text>
+              <text x="36" y="156" fontSize="12" fontWeight="700">B</text>
+              <text x="36" y="187" fontSize={inputFontSize}>{inputB}</text>
             </>
           )}
-          <text x="340" y="112">OUT</text>
-          <text x="372" y="135" fontSize="22" fontWeight="700">{output}</text>
-          <text x="182" y="224" textAnchor="middle" fill="rgb(var(--color-accent-hover))">{gate}</text>
+          <text x="336" y="113" fontSize="12" fontWeight="700">OUT</text>
+          <text x="394" y="137" textAnchor="end" fontSize={outputFontSize} fontWeight="700">{outputText}</text>
+          <text x="190" y="222" textAnchor="middle" fontSize="13" fill="rgb(var(--color-accent-hover))">{gate}</text>
         </g>
       </svg>
     </div>

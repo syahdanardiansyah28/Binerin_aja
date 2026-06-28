@@ -11,16 +11,14 @@ export default function LandingPage({ onNavigate }) {
       <section className="relative overflow-hidden border-b border-linear-border/70">
         <Container className="grid gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1fr)] lg:items-center">
           <div className="max-w-3xl">
-            <p className="font-mono text-sm text-linear-muted">Evolusi Gerbang Logika Menuju ALU</p>
-            <h1 className="mt-4 text-5xl font-medium leading-none text-linear-strong md:text-6xl">
+            <h1 className="text-5xl font-medium leading-none text-linear-strong md:text-6xl">
               Binerin
             </h1>
             <p className="mt-5 text-base leading-7 text-linear-muted md:text-lg">
-              Simulator frontend untuk membaca alur input-output digital dari gate dasar, adder, multiplexer, sampai ALU sederhana.
+              Binerin dibuat untuk mempelajari bagaimana gerbang logika berkembang menjadi Half Adder, Full Adder, 4-bit Adder, Subtractor, Multiplexer, hingga ALU sederhana.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button variant="primary" onClick={() => onNavigate('/simulasi')}>Mulai Simulasi</Button>
-              <Button variant="secondary" onClick={() => onNavigate('/tentang')}>Tentang Project</Button>
             </div>
           </div>
 
