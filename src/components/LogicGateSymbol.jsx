@@ -42,7 +42,7 @@ const gatePaths = {
   ),
 };
 
-export default function LogicGateSymbol({ gate, inputA, inputB, output }) {
+export default function LogicGateSymbol({ gate, inputA, inputB, output, title = '', className = '' }) {
   const isNot = gate === 'NOT';
   const outputStart = ['NAND', 'NOR', 'XNOR'].includes(gate) ? 277 : gate === 'NOT' ? 264 : 250;
   const outputText = String(output ?? '-');
@@ -51,7 +51,15 @@ export default function LogicGateSymbol({ gate, inputA, inputB, output }) {
   const outputFontSize = outputText.length > 8 ? 14 : outputText.length > 4 ? 17 : 20;
 
   return (
-    <div className="min-w-0 overflow-hidden rounded-lg border border-linear-border/70 bg-linear-surface p-3 sm:p-4">
+    <div className={`min-w-0 overflow-hidden rounded-lg border border-linear-border/70 bg-linear-surface p-3 sm:p-4 ${className}`}>
+      {title && (
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h3 className="text-lg font-medium text-linear-strong">{title}</h3>
+          <span className="rounded-full border border-linear-border/70 bg-linear-surface2 px-3 py-1 font-mono text-xs text-linear-muted">
+            A/B -&gt; X
+          </span>
+        </div>
+      )}
       <svg className="h-auto w-full" viewBox="0 0 420 260" role="img" aria-label={`${gate} gate symbol`}>
         <rect width="420" height="260" rx="8" fill="rgb(var(--color-surface))" />
         <g stroke="rgb(var(--color-strong) / 0.06)" strokeWidth="1">
@@ -86,7 +94,7 @@ export default function LogicGateSymbol({ gate, inputA, inputB, output }) {
               <text x="36" y="187" fontSize={inputFontSize}>{inputB}</text>
             </>
           )}
-          <text x="336" y="113" fontSize="12" fontWeight="700">OUT</text>
+          <text x="336" y="113" fontSize="12" fontWeight="700">X</text>
           <text x="394" y="137" textAnchor="end" fontSize={outputFontSize} fontWeight="700">{outputText}</text>
           <text x="190" y="222" textAnchor="middle" fontSize="13" fill="rgb(var(--color-accent-hover))">{gate}</text>
         </g>
