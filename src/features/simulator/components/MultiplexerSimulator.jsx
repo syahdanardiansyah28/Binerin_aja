@@ -6,6 +6,7 @@ import StatCard from '../../../components/common/StatCard';
 import ExplanationCard from '../../../components/simulation/ExplanationCard';
 import InputPanel from '../../../components/simulation/InputPanel';
 import OutputPanel from '../../../components/simulation/OutputPanel';
+import SimulatorCircuitDiagram from '../../../components/simulation/SimulatorCircuitDiagram';
 import { evaluateMultiplexer } from '../logic/multiplexer';
 
 export default function MultiplexerSimulator() {
@@ -31,9 +32,27 @@ export default function MultiplexerSimulator() {
           </div>
         </InputPanel>
 
-        <ExplanationCard title="Selector">
-          <p>Selector 00 memilih I0, 01 memilih I1, 10 memilih I2, dan 11 memilih I3.</p>
-        </ExplanationCard>
+        <SimulatorCircuitDiagram
+          title="Rangkaian Multiplexer 4:1"
+          type="multiplexer"
+          values={{
+            inputs,
+            output: result.output,
+            selectedIndex: result.selectedIndex,
+            selectedInput: result.selectedInput,
+            selector,
+          }}
+        />
+
+        <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
+          <div className="grid gap-3">
+            <StatCard label="Selected Input" value={result.selectedInput} />
+            <StatCard label="Output" value={result.output} />
+            {!result.isValid && (
+              <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>
+            )}
+          </div>
+        </OutputPanel>
 
         <DataTable
           headers={['Input', 'Value', 'Selected']}
@@ -42,13 +61,14 @@ export default function MultiplexerSimulator() {
         />
       </div>
 
-      <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
-        <div className="grid gap-3">
-          <StatCard label="Selected Input" value={result.selectedInput} />
-          <StatCard label="Output" value={result.output} />
-          {!result.isValid && <p className="rounded-md border border-red-300/20 bg-red-300/10 p-3 text-sm text-red-100">{result.errorMessage}</p>}
-        </div>
-      </OutputPanel>
+      <div className="grid content-start gap-5">
+        <ExplanationCard title="Konsep Multiplexer">
+          <p>
+            Multiplexer 4:1 bekerja seperti pemilih jalur. Dua bit selector menentukan input mana yang diteruskan ke output: 00 untuk I0, 01
+            untuk I1, 10 untuk I2, dan 11 untuk I3.
+          </p>
+        </ExplanationCard>
+      </div>
     </div>
   );
 }

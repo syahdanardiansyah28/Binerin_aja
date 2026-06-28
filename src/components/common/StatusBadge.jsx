@@ -1,8 +1,8 @@
 const tones = {
-  success: 'border-emerald-300/25 bg-emerald-300/10 text-emerald-100',
-  warning: 'border-yellow-300/25 bg-yellow-300/10 text-yellow-100',
-  danger: 'border-red-300/25 bg-red-300/10 text-red-100',
-  neutral: 'border-white/10 bg-white/[0.03] text-linear-muted',
+  success: 'border-linear-success/30 bg-linear-successSurface text-linear-successText',
+  warning: 'border-linear-warning/30 bg-linear-warningSurface text-linear-warningText',
+  danger: 'border-linear-danger/30 bg-linear-dangerSurface text-linear-dangerText',
+  neutral: 'border-linear-border/70 bg-linear-surface2 text-linear-muted',
 };
 
 export default function StatusBadge({ tone = 'neutral', children }) {

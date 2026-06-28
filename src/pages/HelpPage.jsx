@@ -61,10 +61,10 @@ export default function HelpPage() {
           <div className="grid gap-4 md:grid-cols-2">
             {guides.map((guide) => (
               <Card key={guide.title} as="article">
-                <h3 className="text-lg font-medium text-white">{guide.title}</h3>
+                <h3 className="text-lg font-medium text-linear-strong">{guide.title}</h3>
                 <ul className="mt-4 grid gap-3 text-sm leading-6 text-linear-muted">
                   {guide.items.map((item) => (
-                    <li key={item} className="rounded-md border border-white/10 bg-white/[0.02] p-3">
+                    <li key={item} className="rounded-md border border-linear-border/70 bg-linear-surface2 p-3">
                       {item}
                     </li>
                   ))}
@@ -74,10 +74,10 @@ export default function HelpPage() {
           </div>
 
           <Card>
-            <h3 className="text-lg font-medium text-white">Istilah Penting</h3>
+            <h3 className="text-lg font-medium text-linear-strong">Istilah Penting</h3>
             <div className="mt-4 grid gap-3">
               {terms.map(([term, description]) => (
-                <div key={term} className="rounded-md border border-white/10 bg-white/[0.02] p-3">
+                <div key={term} className="rounded-md border border-linear-border/70 bg-linear-surface2 p-3">
                   <p className="font-mono text-sm text-linear-text">{term}</p>
                   <p className="mt-1 text-sm leading-6 text-linear-muted">{description}</p>
                 </div>

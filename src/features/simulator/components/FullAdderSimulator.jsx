@@ -5,6 +5,7 @@ import StatCard from '../../../components/common/StatCard';
 import ExplanationCard from '../../../components/simulation/ExplanationCard';
 import InputPanel from '../../../components/simulation/InputPanel';
 import OutputPanel from '../../../components/simulation/OutputPanel';
+import SimulatorCircuitDiagram from '../../../components/simulation/SimulatorCircuitDiagram';
 import { evaluateFullAdder, fullAdderRows } from '../logic/fullAdder';
 
 export default function FullAdderSimulator() {
@@ -24,9 +25,22 @@ export default function FullAdderSimulator() {
           </div>
         </InputPanel>
 
-        <ExplanationCard title="Konsep">
-          <p>Full Adder menambahkan Carry In. SUM berasal dari A XOR B XOR Cin, sementara Cout aktif ketika minimal dua input bernilai 1.</p>
-        </ExplanationCard>
+        <SimulatorCircuitDiagram
+          title="Rangkaian Full Adder"
+          type="full-adder"
+          values={{ a: inputA, b: inputB, cin: carryIn, sum: result.sum, cout: result.cout }}
+        />
+
+        <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
+          <div className="grid gap-3">
+            <StatCard label="SUM" value={result.sum} />
+            <StatCard label="Carry Out" value={result.cout} />
+            <StatCard label="Binary Result" value={result.binaryResult || '-'} />
+            {!result.isValid && (
+              <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>
+            )}
+          </div>
+        </OutputPanel>
 
         <DataTable
           headers={['A', 'B', 'Cin', 'SUM', 'Cout']}
@@ -34,14 +48,14 @@ export default function FullAdderSimulator() {
         />
       </div>
 
-      <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
-        <div className="grid gap-3">
-          <StatCard label="SUM" value={result.sum} />
-          <StatCard label="Carry Out" value={result.cout} />
-          <StatCard label="Binary Result" value={result.binaryResult || '-'} />
-          {!result.isValid && <p className="rounded-md border border-red-300/20 bg-red-300/10 p-3 text-sm text-red-100">{result.errorMessage}</p>}
-        </div>
-      </OutputPanel>
+      <div className="grid content-start gap-5">
+        <ExplanationCard title="Konsep Full Adder">
+          <p>
+            Full Adder menyambungkan dua Half Adder. A dan B diproses lebih dulu, lalu hasil SUM sementara dijumlahkan dengan Carry In. Dua
+            keluaran Carry digabung memakai OR untuk menghasilkan Carry Out.
+          </p>
+        </ExplanationCard>
+      </div>
     </div>
   );
 }

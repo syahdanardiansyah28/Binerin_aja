@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Container from '../components/common/Container';
 import SectionTitle from '../components/common/SectionTitle';
 import SimulationTabs from '../components/simulation/SimulationTabs';
@@ -23,9 +23,19 @@ const simulatorByTab = {
   'circuit-builder': CircuitBuilderSimulator,
 };
 
-export default function SimulationPage() {
-  const [activeTab, setActiveTab] = useState('logic-gates');
+function readInitialTab(search = '') {
+  const params = new URLSearchParams(search);
+  const tab = params.get('tab');
+  return simulatorByTab[tab] ? tab : 'logic-gates';
+}
+
+export default function SimulationPage({ search = '' }) {
+  const [activeTab, setActiveTab] = useState(() => readInitialTab(search));
   const ActiveSimulator = useMemo(() => simulatorByTab[activeTab] || LogicGateSimulator, [activeTab]);
+
+  useEffect(() => {
+    setActiveTab(readInitialTab(search));
+  }, [search]);
 
   return (
     <section className="py-8 md:py-12">

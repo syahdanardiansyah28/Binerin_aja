@@ -38,7 +38,7 @@ export default function AboutPage() {
           {cards.map((card, index) => (
             <Card key={card.title} as="article">
               <div className="mb-4 flex items-center justify-between gap-3">
-                <h3 className="text-lg font-medium text-white">{card.title}</h3>
+                <h3 className="text-lg font-medium text-linear-strong">{card.title}</h3>
                 <span className="font-mono text-sm text-linear-muted">0{index + 1}</span>
               </div>
               <p className="text-sm leading-7 text-linear-muted">{card.content}</p>

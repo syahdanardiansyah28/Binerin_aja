@@ -17,7 +17,7 @@ export default function BinaryInput({
     <label className={`block min-w-0 text-sm text-linear-muted ${disabled ? 'opacity-50' : ''}`}>
       <span>{label}</span>
       <input
-        className="mt-2 h-12 w-full rounded-md border border-white/10 bg-white/[0.02] px-3 font-mono text-base text-linear-text outline-none transition placeholder:text-linear-subtle focus:border-linear-accent disabled:cursor-not-allowed"
+        className="mt-2 h-12 w-full rounded-md border border-linear-border/70 bg-linear-surface2 px-3 font-mono text-base text-linear-text outline-none transition placeholder:text-linear-subtle focus:border-linear-accent disabled:cursor-not-allowed"
         value={value}
         onChange={handleChange}
         placeholder={placeholder}
@@ -28,7 +28,7 @@ export default function BinaryInput({
         autoComplete="off"
         spellCheck="false"
       />
-      {error && <span className="mt-2 block text-xs leading-5 text-red-200">{error}</span>}
+      {error && <span className="mt-2 block text-xs leading-5 text-linear-dangerText">{error}</span>}
     </label>
   );
 }
