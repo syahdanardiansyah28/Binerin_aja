@@ -1,28 +1,32 @@
 import { useEffect, useState } from 'react';
-import { isKnownRoute } from '../routes/routeConfig';
+import { isKnownRoute, parseRouteTarget } from '../routes/routeConfig';
 
-function readPath() {
-  const path = window.location.hash.replace(/^#/, '') || '/';
-  return isKnownRoute(path) ? path : '/';
+function readRoute() {
+  const target = window.location.hash.replace(/^#/, '') || '/';
+  const route = parseRouteTarget(target);
+
+  return isKnownRoute(route.fullPath) ? route : parseRouteTarget('/');
 }
 
 export default function useHashRoute() {
-  const [path, setPath] = useState(readPath);
+  const [route, setRoute] = useState(readRoute);
 
   useEffect(() => {
-    const handleHashChange = () => setPath(readPath());
+    const handleHashChange = () => setRoute(readRoute());
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const navigate = (nextPath) => {
     if (!isKnownRoute(nextPath)) return;
-    if (readPath() === nextPath) {
-      setPath(nextPath);
+    const nextRoute = parseRouteTarget(nextPath);
+
+    if (readRoute().fullPath === nextRoute.fullPath) {
+      setRoute(nextRoute);
       return;
     }
-    window.location.hash = nextPath;
+    window.location.hash = nextRoute.fullPath;
   };
 
-  return { path, navigate };
+  return { ...route, path: route.pathname, navigate };
 }
