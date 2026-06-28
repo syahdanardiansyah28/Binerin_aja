@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import MaterialCircuitDiagram from './MaterialCircuitDiagram';
 
 export default function MaterialHero({ material }) {
-  const [imageFailed, setImageFailed] = useState(false);
-
   return (
     <div className="grid gap-6 rounded-lg border border-linear-border/70 bg-linear-surface p-4 md:p-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,1fr)] lg:items-center">
       <div>
@@ -14,23 +12,7 @@ export default function MaterialHero({ material }) {
       </div>
 
       <div className="aspect-[16/10] overflow-hidden rounded-lg border border-linear-border/70 bg-linear-bg">
-        {imageFailed ? (
-          <div className="grid h-full place-items-center bg-linear-surface2">
-            <div className="text-center">
-              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-linear-accent/40 bg-linear-accent/10 font-mono text-linear-accent">
-                {material.number}
-              </span>
-              <p className="mt-4 text-sm text-linear-muted">Ilustrasi {material.title}</p>
-            </div>
-          </div>
-        ) : (
-          <img
-            className="h-full w-full object-cover"
-            src={material.image}
-            alt={`Ilustrasi materi ${material.title}`}
-            onError={() => setImageFailed(true)}
-          />
-        )}
+        <MaterialCircuitDiagram material={material} />
       </div>
     </div>
   );

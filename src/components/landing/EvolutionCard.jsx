@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import MaterialCircuitDiagram from '../material/MaterialCircuitDiagram';
 
 export default function EvolutionCard({ material }) {
-  const [imageFailed, setImageFailed] = useState(false);
-
   return (
     <a
       className="group flex h-full min-w-0 flex-col rounded-lg border border-linear-border/70 bg-linear-surface p-4 text-linear-text transition duration-200 hover:-translate-y-1 hover:border-linear-accent hover:bg-linear-surface2 hover:shadow-primary"
@@ -16,21 +14,7 @@ export default function EvolutionCard({ material }) {
       </div>
 
       <div className="mt-4 aspect-[16/10] overflow-hidden rounded-md border border-linear-border/70 bg-linear-bg">
-        {imageFailed ? (
-          <div className="grid h-full place-items-center bg-linear-surface2">
-            <span className="grid h-12 w-12 place-items-center rounded-full border border-linear-accent/40 bg-linear-accent/10 font-mono text-sm text-linear-accent">
-              {material.number}
-            </span>
-          </div>
-        ) : (
-          <img
-            className="h-full w-full object-cover"
-            src={material.image}
-            alt={`Ilustrasi ${material.title}`}
-            loading="lazy"
-            onError={() => setImageFailed(true)}
-          />
-        )}
+        <MaterialCircuitDiagram compact material={material} />
       </div>
 
       <h3 className="mt-4 text-lg font-medium text-linear-strong">{material.title}</h3>
