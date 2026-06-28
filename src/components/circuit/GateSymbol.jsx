@@ -8,7 +8,7 @@ export default function GateSymbol({ gate }) {
   const outputLineStart = gate === 'NOT' ? 156 : hasBubble ? 172 : 150;
 
   return (
-    <svg className="h-20 w-full" viewBox="0 0 220 110" role="img" aria-label={`${gate} symbol`}>
+    <svg className="h-full w-full" viewBox="0 0 220 110" role="img" aria-label={`${gate} symbol`}>
       <defs>
         <filter id={`gate-glow-${gate}`}>
           <feGaussianBlur stdDeviation="2.2" result="blur" />
@@ -52,7 +52,7 @@ export default function GateSymbol({ gate }) {
       <g fontFamily="SF Mono, Monaco, Consolas, monospace" fontSize="10" fill="rgb(var(--color-muted))">
         <text x="10" y={gate === 'NOT' ? 50 : 31}>A</text>
         {gate !== 'NOT' && <text x="10" y="79">B</text>}
-        <text x="166" y="47">OUT</text>
+        <text x="178" y="47">X</text>
       </g>
     </svg>
   );

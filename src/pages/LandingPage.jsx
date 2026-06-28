@@ -9,7 +9,7 @@ export default function LandingPage({ onNavigate }) {
   return (
     <>
       <section className="relative overflow-hidden border-b border-linear-border/70">
-        <Container className="grid gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1fr)] lg:items-center">
+        <Container className="grid gap-10 py-12 md:py-16 lg:grid-cols-[minmax(0,0.82fr)_minmax(520px,1.08fr)] lg:items-center">
           <div className="max-w-3xl">
             <h1 className="text-5xl font-medium leading-none text-linear-strong md:text-6xl">
               Binerin
