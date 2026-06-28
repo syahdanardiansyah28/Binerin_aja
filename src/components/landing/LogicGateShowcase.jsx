@@ -36,18 +36,7 @@ const gateCards = [
 
 export default function LogicGateShowcase() {
   return (
-    <div className="relative min-h-[420px] overflow-hidden rounded-lg border border-linear-border/70 bg-linear-surface p-5 md:min-h-[440px]">
-      <div className="absolute inset-x-0 top-24 h-px bg-linear-accent/30" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-border/70" />
-
-      <div className="relative z-10 max-w-[320px]">
-        <p className="font-mono text-xs text-linear-muted">Logic Gate Symbols</p>
-        <h2 className="mt-3 text-2xl font-medium text-linear-strong">Simbol gerbang logika</h2>
-        <p className="mt-3 text-sm leading-6 text-linear-muted">
-          Kartu ini menampilkan simbol dasar yang menjadi pondasi Half Adder, Full Adder, hingga ALU.
-        </p>
-      </div>
-
+    <div className="relative min-h-[420px] overflow-visible md:min-h-[440px]">
       <CardSwap cardDistance={44} delay={3600} height={240} pauseOnHover verticalDistance={44} width={330}>
         {gateCards.map((item) => (
           <Card
