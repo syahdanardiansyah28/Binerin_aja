@@ -1,3 +1,7 @@
+import Card from '../components/common/Card';
+import Container from '../components/common/Container';
+import SectionTitle from '../components/common/SectionTitle';
+
 const guides = [
   {
     title: 'Cara menggunakan ALU Simulator',
@@ -45,43 +49,43 @@ const terms = [
 
 export default function HelpPage() {
   return (
-    <div className="mx-auto grid max-w-7xl gap-5">
-      <section className="cpu-card rounded p-5 sm:p-6">
-        <p className="font-mono text-xs uppercase tracking-[0.28em] text-cyan-200/70">User Guide</p>
-        <h2 className="mt-2 text-2xl font-bold text-white md:text-3xl">Help</h2>
-        <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">
-          Panduan cepat untuk memakai simulator ALU, logic gate, dan truth table di Binerin Aja.
-        </p>
-      </section>
+    <section className="py-8 md:py-12">
+      <Container className="grid gap-8">
+        <SectionTitle
+          label="User Guide"
+          title="Bantuan"
+          description="Ringkasan cara membaca simulator ALU, logic gate, dan tabel proses di Binerin."
+        />
 
-      <div className="grid gap-5 lg:grid-cols-[1fr_420px]">
-        <div className="grid gap-5 md:grid-cols-2">
-          {guides.map((guide) => (
-            <section key={guide.title} className="cpu-card rounded p-5">
-              <h3 className="text-lg font-semibold text-white">{guide.title}</h3>
-              <ul className="mt-4 grid gap-3 text-sm leading-6 text-slate-300">
-                {guide.items.map((item) => (
-                  <li key={item} className="rounded border border-white/10 bg-white/[0.03] p-3">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
-
-        <section className="cpu-card rounded p-5">
-          <h3 className="text-lg font-semibold text-white">Istilah Penting</h3>
-          <div className="mt-4 grid gap-3">
-            {terms.map(([term, description]) => (
-              <div key={term} className="rounded border border-cyan-300/15 bg-cyan-300/[0.04] p-3">
-                <p className="font-mono text-sm font-bold text-cyan-100">{term}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-300">{description}</p>
-              </div>
+        <div className="grid gap-5 lg:grid-cols-[1fr_420px]">
+          <div className="grid gap-4 md:grid-cols-2">
+            {guides.map((guide) => (
+              <Card key={guide.title} as="article">
+                <h3 className="text-lg font-medium text-white">{guide.title}</h3>
+                <ul className="mt-4 grid gap-3 text-sm leading-6 text-linear-muted">
+                  {guide.items.map((item) => (
+                    <li key={item} className="rounded-md border border-white/10 bg-white/[0.02] p-3">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
             ))}
           </div>
-        </section>
-      </div>
-    </div>
+
+          <Card>
+            <h3 className="text-lg font-medium text-white">Istilah Penting</h3>
+            <div className="mt-4 grid gap-3">
+              {terms.map(([term, description]) => (
+                <div key={term} className="rounded-md border border-white/10 bg-white/[0.02] p-3">
+                  <p className="font-mono text-sm text-linear-text">{term}</p>
+                  <p className="mt-1 text-sm leading-6 text-linear-muted">{description}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </Container>
+    </section>
   );
 }

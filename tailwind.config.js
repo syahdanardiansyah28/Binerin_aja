@@ -4,23 +4,28 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        mono: ['"SF Mono"', 'Monaco', '"Cascadia Code"', 'Consolas', 'monospace'],
       },
       colors: {
-        cpu: {
-          bg: '#050816',
-          panel: '#0b1024',
-          card: 'rgba(14, 22, 45, 0.72)',
-          line: 'rgba(103, 232, 249, 0.22)',
-          cyan: '#22d3ee',
-          green: '#34d399',
-          pink: '#f472b6',
+        linear: {
+          bg: '#08090A',
+          surface: '#0F1011',
+          surface2: '#141516',
+          line: '#23252A',
+          border: '#383B3F',
+          text: '#F7F8F8',
+          muted: '#8A8F98',
+          subtle: '#62666D',
+          accent: '#5E6AD2',
+          accentHover: '#828FFF',
+          cta: '#E5E5E6',
         },
       },
       boxShadow: {
-        neon: '0 0 28px rgba(34, 211, 238, 0.20)',
-        innerline: 'inset 0 1px 0 rgba(255,255,255,0.08)',
+        hairline: 'rgba(0, 0, 0, 0.4) 0px 1px 0px 0px',
+        primary:
+          'rgba(0, 0, 0, 0) 0px 8px 2px 0px, rgba(0, 0, 0, 0.01) 0px 5px 2px 0px, rgba(0, 0, 0, 0.04) 0px 3px 2px 0px, rgba(0, 0, 0, 0.07) 0px 1px 1px 0px, rgba(0, 0, 0, 0.08) 0px 0px 1px 0px',
       },
     },
   },
