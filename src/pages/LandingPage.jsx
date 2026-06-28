@@ -32,9 +32,9 @@ export default function LandingPage({ onNavigate }) {
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.7fr_1fr] lg:items-start">
             <SectionTitle
-              label="Fitur Simulasi"
-              title="Semua fitur dibuat sebagai komponen mandiri."
-              description="Tab simulasi memanggil komponen dan logic terpisah, sehingga perubahan satu fitur tidak perlu menyentuh fitur lain."
+              label="Fitur"
+              title="Fitur Binerin"
+              description="Fitur-fitur Binerin di peruntukan untuk mempelajari bagaimana konsep dari Gerbang Logika, Half Adder, Full Adder, N-Bit Adder, Subtractor, Multiplexer dan ALU. Binerin juga memiliki fitur simulasi untuk melihat bagaimana proses input nya berlangsung memasuki sebuah proses yang menghasilkan output."
             />
             <div className="grid gap-3 sm:grid-cols-2">
               {simulatorTabs.slice(0, 7).map((tab) => (
