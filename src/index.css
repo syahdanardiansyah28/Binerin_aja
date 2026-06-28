@@ -4,10 +4,60 @@
 
 :root {
   color-scheme: dark;
+  --color-bg: 8 9 10;
+  --color-surface: 15 16 17;
+  --color-surface-2: 20 21 22;
+  --color-line: 35 37 42;
+  --color-border: 56 59 63;
+  --color-text: 247 248 248;
+  --color-strong: 255 255 255;
+  --color-muted: 138 143 152;
+  --color-subtle: 98 102 109;
+  --color-accent: 94 106 210;
+  --color-accent-hover: 130 143 255;
+  --color-on-accent: 255 255 255;
+  --color-cta: 229 229 230;
+  --color-success: 52 211 153;
+  --color-success-text: 209 250 229;
+  --color-success-surface: 6 78 59;
+  --color-warning: 250 204 21;
+  --color-warning-text: 254 249 195;
+  --color-warning-surface: 113 63 18;
+  --color-danger: 248 113 113;
+  --color-danger-text: 254 226 226;
+  --color-danger-surface: 127 29 29;
+  --color-shadow: 0 0 0;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --color-bg: 255 255 255;
+  --color-surface: 247 248 248;
+  --color-surface-2: 255 255 255;
+  --color-line: 226 228 231;
+  --color-border: 208 214 224;
+  --color-text: 20 21 22;
+  --color-strong: 8 9 10;
+  --color-muted: 98 102 109;
+  --color-subtle: 138 143 152;
+  --color-accent: 94 106 210;
+  --color-accent-hover: 80 92 190;
+  --color-on-accent: 255 255 255;
+  --color-cta: 94 106 210;
+  --color-success: 4 120 87;
+  --color-success-text: 6 95 70;
+  --color-success-surface: 209 250 229;
+  --color-warning: 161 98 7;
+  --color-warning-text: 133 77 14;
+  --color-warning-surface: 254 243 199;
+  --color-danger: 185 28 28;
+  --color-danger-text: 153 27 27;
+  --color-danger-surface: 254 226 226;
+  --color-shadow: 8 9 10;
 }
 
 * {
@@ -18,9 +68,24 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #08090a;
-  color: #f7f8f8;
+  background: rgb(var(--color-bg));
+  color: rgb(var(--color-text));
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.theme-transition,
+.theme-transition :where(nav, main, footer, section, article, aside, div, span, p, h1, h2, h3, h4, button, input, select, textarea, table, th, td, svg, path, rect, circle) {
+  transition-duration: 180ms;
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition :where(nav, main, footer, section, article, aside, div, span, p, h1, h2, h3, h4, button, input, select, textarea, table, th, td, svg, path, rect, circle) {
+    transition-duration: 1ms;
+  }
 }
 
 a {
@@ -39,33 +104,33 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid #5e6ad2;
+  outline: 2px solid rgb(var(--color-accent));
   outline-offset: 2px;
 }
 
 .circuit-controls {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0f1011;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px 0px;
+  border: 1px solid rgb(var(--color-strong) / 0.08);
+  background: rgb(var(--color-surface));
+  box-shadow: rgb(var(--color-shadow) / 0.18) 0px 1px 0px 0px;
 }
 
 .circuit-controls button {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: #141516;
-  color: #f7f8f8;
-  fill: #f7f8f8;
+  border-bottom: 1px solid rgb(var(--color-strong) / 0.08);
+  background: rgb(var(--color-surface-2));
+  color: rgb(var(--color-text));
+  fill: rgb(var(--color-text));
 }
 
 .circuit-controls button svg {
-  fill: #f7f8f8;
+  fill: rgb(var(--color-text));
 }
 
 .circuit-controls button:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(var(--color-strong) / 0.05);
 }
 
 .react-flow__edge.selected path,
 .react-flow__edge:focus path {
-  stroke: #828fff;
+  stroke: rgb(var(--color-accent-hover));
   stroke-width: 3;
 }

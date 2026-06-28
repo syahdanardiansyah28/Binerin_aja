@@ -29,7 +29,7 @@ const nodeTypes = {
 
 const defaultEdgeOptions = {
   animated: false,
-  style: { stroke: '#5E6AD2', strokeWidth: 2 },
+  style: { stroke: 'rgb(var(--color-accent))', strokeWidth: 2 },
 };
 
 const makeBaseData = (item, onToggle) => ({
@@ -235,20 +235,20 @@ export default function CircuitBuilderSimulator() {
 
   const selectedOutputs = selectedNode?.data?.outputs || {};
   const selectedInputs = selectedNode?.data?.inputValues || {};
-  const statusTone = simulationStatus === 'Success' ? 'border-emerald-300/25 bg-emerald-300/10 text-emerald-100' : 'border-white/10 bg-white/[0.03] text-linear-muted';
+  const statusTone = simulationStatus === 'Success' ? 'border-linear-success/30 bg-linear-successSurface text-linear-successText' : 'border-linear-border/70 bg-linear-surface2 text-linear-muted';
 
   return (
     <div className="grid gap-5 xl:grid-cols-[240px_minmax(0,1fr)_320px]">
       <Card as="aside" className="content-start">
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h3 className="text-lg font-medium text-white">Components</h3>
+          <h3 className="text-lg font-medium text-linear-strong">Components</h3>
           <span className="font-mono text-sm text-linear-muted">{nodes.length}/{MAX_CIRCUIT_NODES}</span>
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1 xl:grid xl:overflow-visible xl:pb-0">
           {circuitPalette.map((item) => (
             <button
               key={`${item.kind}-${item.label}`}
-              className="min-h-12 min-w-[132px] rounded-md border border-white/10 bg-white/[0.02] px-3 py-2 text-left text-sm text-linear-muted transition hover:bg-white/[0.05] hover:text-linear-text xl:min-w-0"
+              className="min-h-12 min-w-[132px] rounded-md border border-linear-border/70 bg-linear-surface2 px-3 py-2 text-left text-sm text-linear-muted transition hover:bg-linear-line/40 hover:text-linear-text xl:min-w-0"
               type="button"
               onClick={() => addComponent(item)}
             >
@@ -262,7 +262,7 @@ export default function CircuitBuilderSimulator() {
       <Card className="min-w-0 overflow-hidden p-3 md:p-4">
         <div className="mb-3 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h3 className="text-lg font-medium text-white">Circuit Canvas</h3>
+            <h3 className="text-lg font-medium text-linear-strong">Circuit Canvas</h3>
             <p className="mt-1 text-sm text-linear-muted">Node limit dan edge limit dijaga agar canvas tetap ringan.</p>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:flex">
@@ -273,7 +273,7 @@ export default function CircuitBuilderSimulator() {
           </div>
         </div>
 
-        <div className="h-[520px] overflow-hidden rounded-lg border border-white/10 bg-linear-bg md:h-[640px]">
+        <div className="h-[520px] overflow-hidden rounded-lg border border-linear-border/70 bg-linear-bg md:h-[640px]">
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -299,7 +299,7 @@ export default function CircuitBuilderSimulator() {
             defaultEdgeOptions={defaultEdgeOptions}
             proOptions={{ hideAttribution: true }}
           >
-            <Background color="#383B3F" gap={24} size={1} />
+            <Background color="rgb(var(--color-border))" gap={24} size={1} />
             <Controls className="circuit-controls" />
           </ReactFlow>
         </div>
@@ -307,7 +307,7 @@ export default function CircuitBuilderSimulator() {
 
       <aside className="grid content-start gap-5">
         <Card>
-          <h3 className="text-lg font-medium text-white">Simulation Status</h3>
+          <h3 className="text-lg font-medium text-linear-strong">Simulation Status</h3>
           <div className={`mt-4 rounded-md border p-3 text-sm leading-6 ${statusTone}`}>
             <p className="font-mono text-xs">{simulationStatus}</p>
             <p className="mt-2">{simulationMessage}</p>
@@ -315,7 +315,7 @@ export default function CircuitBuilderSimulator() {
         </Card>
 
         <Card>
-          <h3 className="text-lg font-medium text-white">Properties</h3>
+          <h3 className="text-lg font-medium text-linear-strong">Properties</h3>
           {selectedNode ? (
             <div className="mt-4 grid gap-3 text-sm text-linear-muted">
               <Property label="Component" value={selectedNode.data.label || selectedNode.data.gateType} />
@@ -341,12 +341,12 @@ export default function CircuitBuilderSimulator() {
         </Card>
 
         <Card>
-          <h3 className="text-lg font-medium text-white">Output LEDs</h3>
+          <h3 className="text-lg font-medium text-linear-strong">Output LEDs</h3>
           <div className="mt-4 grid gap-3">
             {nodes.filter((node) => node.type === 'outputNode').map((node) => (
-              <div key={node.id} className="flex items-center justify-between rounded-md border border-white/10 bg-white/[0.02] p-3">
+              <div key={node.id} className="flex items-center justify-between rounded-md border border-linear-border/70 bg-linear-surface2 p-3">
                 <span className="font-mono text-sm text-linear-muted">{node.data.label}</span>
-                <span className={`h-5 w-5 rounded-full border ${node.data.value === 1 ? 'border-emerald-200 bg-emerald-300' : 'border-linear-border bg-linear-line'}`} />
+                <span className={`h-5 w-5 rounded-full border ${node.data.value === 1 ? 'border-linear-success bg-linear-success' : 'border-linear-border bg-linear-line'}`} />
               </div>
             ))}
           </div>
@@ -358,7 +358,7 @@ export default function CircuitBuilderSimulator() {
 
 function Property({ label, value }) {
   return (
-    <div className="rounded-md border border-white/10 bg-white/[0.02] p-3">
+    <div className="rounded-md border border-linear-border/70 bg-linear-surface2 p-3">
       <p className="text-xs text-linear-subtle">{label}</p>
       <p className="mt-1 break-words font-mono text-linear-text">{value}</p>
     </div>

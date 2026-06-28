@@ -47,17 +47,17 @@ export default function LogicGateSymbol({ gate, inputA, inputB, output }) {
   const outputStart = ['NAND', 'NOR', 'XNOR'].includes(gate) ? 277 : gate === 'NOT' ? 264 : 250;
 
   return (
-    <div className="min-w-0 overflow-hidden rounded-lg border border-white/[0.06] bg-linear-surface p-3 sm:p-4">
+    <div className="min-w-0 overflow-hidden rounded-lg border border-linear-border/70 bg-linear-surface p-3 sm:p-4">
       <svg className="h-auto w-full" viewBox="0 0 420 260" role="img" aria-label={`${gate} gate symbol`}>
-        <rect width="420" height="260" rx="8" fill="#0F1011" />
-        <g stroke="rgba(255,255,255,0.06)" strokeWidth="1">
+        <rect width="420" height="260" rx="8" fill="rgb(var(--color-surface))" />
+        <g stroke="rgb(var(--color-strong) / 0.06)" strokeWidth="1">
           <path d="M0 52 H420" />
           <path d="M0 208 H420" />
           <path d="M52 0 V260" />
           <path d="M368 0 V260" />
         </g>
 
-        <g stroke="#828FFF" strokeWidth="4" strokeLinecap="round" fill="none">
+        <g stroke="rgb(var(--color-accent-hover))" strokeWidth="4" strokeLinecap="round" fill="none">
           {isNot ? (
             <path d="M58 130 H132" />
           ) : (
@@ -69,11 +69,11 @@ export default function LogicGateSymbol({ gate, inputA, inputB, output }) {
           <path d={`M${outputStart} 130 H362`} />
         </g>
 
-        <g stroke="#5E6AD2" strokeWidth="4" fill="rgba(94,106,210,0.14)">
+        <g stroke="rgb(var(--color-accent))" strokeWidth="4" fill="rgb(var(--color-accent) / 0.14)">
           {gatePaths[gate]}
         </g>
 
-        <g fontFamily="SF Mono, Monaco, Consolas, monospace" fontSize="15" fill="#F7F8F8">
+        <g fontFamily="SF Mono, Monaco, Consolas, monospace" fontSize="15" fill="rgb(var(--color-text))">
           <text x="24" y={isNot ? 124 : 92}>A</text>
           <text x="24" y={isNot ? 145 : 156}>{inputA}</text>
           {!isNot && (
@@ -84,7 +84,7 @@ export default function LogicGateSymbol({ gate, inputA, inputB, output }) {
           )}
           <text x="340" y="112">OUT</text>
           <text x="372" y="135" fontSize="22" fontWeight="700">{output}</text>
-          <text x="182" y="224" textAnchor="middle" fill="#828FFF">{gate}</text>
+          <text x="182" y="224" textAnchor="middle" fill="rgb(var(--color-accent-hover))">{gate}</text>
         </g>
       </svg>
     </div>

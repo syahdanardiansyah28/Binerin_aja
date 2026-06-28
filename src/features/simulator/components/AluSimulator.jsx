@@ -46,7 +46,7 @@ export default function AluSimulator() {
                 className={`min-h-16 rounded-md border p-3 text-left transition ${
                   operation === item.id
                     ? 'border-linear-cta bg-linear-cta text-linear-bg shadow-primary'
-                    : 'border-white/10 bg-white/[0.02] text-linear-muted hover:text-linear-text'
+                    : 'border-linear-border/70 bg-linear-surface2 text-linear-muted hover:text-linear-text'
                 }`}
                 type="button"
                 onClick={() => setOperation(item.id)}
@@ -72,7 +72,7 @@ export default function AluSimulator() {
           <StatCard label="Result Biner" value={result.binaryResult ? formatBinaryWithDecimal(result.binaryResult) : '-'} />
           <StatCard label="Result Desimal" value={result.decimalResult} />
           <StatCard label="Flag" value={result.flag || '-'} tone={result.flag === 'Borrow' || result.flag === 'Carry' ? 'danger' : 'default'} />
-          {!result.isValid && <p className="rounded-md border border-red-300/20 bg-red-300/10 p-3 text-sm text-red-100">{result.errorMessage}</p>}
+          {!result.isValid && <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>}
         </div>
       </OutputPanel>
     </div>

@@ -5,8 +5,8 @@ export default function BinaryToggle({ label, value, onChange, disabled = false 
     <button
       className={`flex min-h-12 items-center justify-between gap-3 rounded-md border px-3 text-left transition ${
         active
-          ? 'border-linear-accent bg-linear-accent/15 text-white'
-          : 'border-white/10 bg-white/[0.02] text-linear-muted hover:text-linear-text'
+          ? 'border-linear-accent bg-linear-accent/15 text-linear-strong'
+          : 'border-linear-border/70 bg-linear-surface2 text-linear-muted hover:text-linear-text'
       } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
       type="button"
       onClick={() => !disabled && onChange(active ? 0 : 1)}

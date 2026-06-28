@@ -46,7 +46,7 @@ export default function MultiplexerSimulator() {
         <div className="grid gap-3">
           <StatCard label="Selected Input" value={result.selectedInput} />
           <StatCard label="Output" value={result.output} />
-          {!result.isValid && <p className="rounded-md border border-red-300/20 bg-red-300/10 p-3 text-sm text-red-100">{result.errorMessage}</p>}
+          {!result.isValid && <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>}
         </div>
       </OutputPanel>
     </div>
