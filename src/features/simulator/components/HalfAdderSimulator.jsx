@@ -5,6 +5,7 @@ import StatCard from '../../../components/common/StatCard';
 import ExplanationCard from '../../../components/simulation/ExplanationCard';
 import InputPanel from '../../../components/simulation/InputPanel';
 import OutputPanel from '../../../components/simulation/OutputPanel';
+import SimulatorCircuitDiagram from '../../../components/simulation/SimulatorCircuitDiagram';
 import { evaluateHalfAdder, halfAdderRows } from '../logic/halfAdder';
 
 export default function HalfAdderSimulator() {
@@ -22,9 +23,22 @@ export default function HalfAdderSimulator() {
           </div>
         </InputPanel>
 
-        <ExplanationCard title="Konsep">
-          <p>Half Adder menjumlahkan dua bit. SUM memakai XOR, Carry memakai AND.</p>
-        </ExplanationCard>
+        <SimulatorCircuitDiagram
+          title="Rangkaian Half Adder"
+          type="half-adder"
+          values={{ a: inputA, b: inputB, sum: result.sum, carry: result.carry }}
+        />
+
+        <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
+          <div className="grid gap-3">
+            <StatCard label="SUM" value={result.sum} />
+            <StatCard label="Carry" value={result.carry} />
+            <StatCard label="Binary Result" value={result.binaryResult || '-'} />
+            {!result.isValid && (
+              <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>
+            )}
+          </div>
+        </OutputPanel>
 
         <DataTable
           headers={['A', 'B', 'SUM', 'Carry']}
@@ -32,14 +46,14 @@ export default function HalfAdderSimulator() {
         />
       </div>
 
-      <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
-        <div className="grid gap-3">
-          <StatCard label="SUM" value={result.sum} />
-          <StatCard label="Carry" value={result.carry} />
-          <StatCard label="Binary Result" value={result.binaryResult || '-'} />
-          {!result.isValid && <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>}
-        </div>
-      </OutputPanel>
+      <div className="grid content-start gap-5">
+        <ExplanationCard title="Konsep Half Adder">
+          <p>
+            Half Adder menjumlahkan dua bit tanpa Carry In. Jalur XOR menghasilkan SUM, sedangkan jalur AND menghasilkan Carry ketika A dan B
+            sama-sama bernilai 1.
+          </p>
+        </ExplanationCard>
+      </div>
     </div>
   );
 }

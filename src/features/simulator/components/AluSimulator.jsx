@@ -5,6 +5,7 @@ import BinaryInput4Bit from '../../../components/simulation/BinaryInput4Bit';
 import ExplanationCard from '../../../components/simulation/ExplanationCard';
 import InputPanel from '../../../components/simulation/InputPanel';
 import OutputPanel from '../../../components/simulation/OutputPanel';
+import SimulatorCircuitDiagram from '../../../components/simulation/SimulatorCircuitDiagram';
 import { formatBinaryWithDecimal } from '../../../utils/format';
 import { aluOperations } from '../data/aluOperations';
 import { calculateAlu } from '../logic/alu';
@@ -58,23 +59,42 @@ export default function AluSimulator() {
           </div>
         </InputPanel>
 
-        <ExplanationCard title="Selector ALU">
-          <p>{selectedOperation.description}</p>
-          {result.explanation && <p className="mt-3">{result.explanation}</p>}
-        </ExplanationCard>
+        <SimulatorCircuitDiagram
+          title="Rangkaian ALU Sederhana"
+          type="alu"
+          values={{
+            a: inputA,
+            b: inputB,
+            operation,
+            result: result.binaryResult,
+            selector: selectedOperation.selector,
+          }}
+        />
+
+        <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
+          <div className="grid gap-3">
+            <StatCard label="Operation" value={operation} />
+            <StatCard label="Result Biner" value={result.binaryResult ? formatBinaryWithDecimal(result.binaryResult) : '-'} />
+            <StatCard label="Result Desimal" value={result.decimalResult} />
+            <StatCard label="Flag" value={result.flag || '-'} tone={result.flag === 'Borrow' || result.flag === 'Carry' ? 'danger' : 'default'} />
+            {!result.isValid && (
+              <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>
+            )}
+          </div>
+        </OutputPanel>
 
         <DataTable headers={tableHeaders} rows={tableRows} emptyText="Tabel proses muncul setelah input valid." />
       </div>
 
-      <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
-        <div className="grid gap-3">
-          <StatCard label="Operation" value={operation} />
-          <StatCard label="Result Biner" value={result.binaryResult ? formatBinaryWithDecimal(result.binaryResult) : '-'} />
-          <StatCard label="Result Desimal" value={result.decimalResult} />
-          <StatCard label="Flag" value={result.flag || '-'} tone={result.flag === 'Borrow' || result.flag === 'Carry' ? 'danger' : 'default'} />
-          {!result.isValid && <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>}
-        </div>
-      </OutputPanel>
+      <div className="grid content-start gap-5">
+        <ExplanationCard title="Selector ALU">
+          <p>{selectedOperation.description}</p>
+          {result.explanation && <p className="mt-3">{result.explanation}</p>}
+          <p className="mt-3">
+            Diagram menunjukkan A dan B masuk ke beberapa unit proses. Opcode memilih unit aktif, lalu MUX meneruskan hasilnya sebagai output ALU.
+          </p>
+        </ExplanationCard>
+      </div>
     </div>
   );
 }

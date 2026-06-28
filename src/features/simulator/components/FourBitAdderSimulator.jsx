@@ -6,6 +6,7 @@ import BinaryInput4Bit from '../../../components/simulation/BinaryInput4Bit';
 import ExplanationCard from '../../../components/simulation/ExplanationCard';
 import InputPanel from '../../../components/simulation/InputPanel';
 import OutputPanel from '../../../components/simulation/OutputPanel';
+import SimulatorCircuitDiagram from '../../../components/simulation/SimulatorCircuitDiagram';
 import { calculateFourBitAdder } from '../logic/fourBitAdder';
 
 export default function FourBitAdderSimulator() {
@@ -25,9 +26,22 @@ export default function FourBitAdderSimulator() {
           </div>
         </InputPanel>
 
-        <ExplanationCard title="Rangkaian">
-          <p>Empat Full Adder dirangkai dari bit paling kanan. Cout dari satu bit menjadi Cin untuk bit di sebelah kirinya.</p>
-        </ExplanationCard>
+        <SimulatorCircuitDiagram
+          title="Rangkaian 4-bit Adder"
+          type="four-bit-adder"
+          values={{ a: inputA, b: inputB, cin: carryIn, result: result.result, cout: result.carryOut }}
+        />
+
+        <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
+          <div className="grid gap-3">
+            <StatCard label="Result Biner" value={result.result || '-'} />
+            <StatCard label="Result Desimal" value={result.decimal} />
+            <StatCard label="Carry Out" value={result.carryOut} />
+            {!result.isValid && (
+              <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>
+            )}
+          </div>
+        </OutputPanel>
 
         <DataTable
           headers={['Bit', 'A', 'B', 'Cin', 'SUM', 'Cout']}
@@ -36,14 +50,14 @@ export default function FourBitAdderSimulator() {
         />
       </div>
 
-      <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
-        <div className="grid gap-3">
-          <StatCard label="Result Biner" value={result.result || '-'} />
-          <StatCard label="Result Desimal" value={result.decimal} />
-          <StatCard label="Carry Out" value={result.carryOut} />
-          {!result.isValid && <p className="rounded-md border border-linear-danger/30 bg-linear-dangerSurface p-3 text-sm text-linear-dangerText">{result.errorMessage}</p>}
-        </div>
-      </OutputPanel>
+      <div className="grid content-start gap-5">
+        <ExplanationCard title="Konsep 4-bit Adder">
+          <p>
+            4-bit Adder menyusun empat Full Adder secara berantai. Proses dimulai dari bit paling kanan, lalu Carry Out dari satu bit masuk
+            sebagai Carry In untuk bit berikutnya sampai hasil 4 bit dan Carry akhir terbentuk.
+          </p>
+        </ExplanationCard>
+      </div>
     </div>
   );
 }
