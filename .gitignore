@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.cjs
+
+# Build output
+dist/
+build/
+.vite/
+coverage/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+!.env.template
+*.local
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+*.keystore
+*.jks
+secrets/
+secret/
+credentials/
+credential/
+
+# Local Codex/agent workspace files
+.agents/
+.codex/
+
+# Project instruction drafts, keep local only
+MD/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test and cache artifacts
+.eslintcache
+.stylelintcache
+.cache/
+tmp/
+temp/
