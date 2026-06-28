@@ -1,0 +1,54 @@
+import { useMemo, useState } from 'react';
+import BinaryInput from '../../../components/common/BinaryInput';
+import BinaryToggle from '../../../components/common/BinaryToggle';
+import DataTable from '../../../components/common/DataTable';
+import StatCard from '../../../components/common/StatCard';
+import ExplanationCard from '../../../components/simulation/ExplanationCard';
+import InputPanel from '../../../components/simulation/InputPanel';
+import OutputPanel from '../../../components/simulation/OutputPanel';
+import { evaluateMultiplexer } from '../logic/multiplexer';
+
+export default function MultiplexerSimulator() {
+  const [inputs, setInputs] = useState(['1', '0', '1', '0']);
+  const [selector, setSelector] = useState('10');
+  const result = useMemo(() => evaluateMultiplexer(inputs, selector), [inputs, selector]);
+
+  const setInputAt = (index, value) => {
+    setInputs((current) => current.map((item, itemIndex) => (itemIndex === index ? String(value) : item)));
+  };
+
+  return (
+    <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(280px,340px)]">
+      <div className="grid gap-5">
+        <InputPanel title="Multiplexer 4:1">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {inputs.map((input, index) => (
+              <BinaryToggle key={`I${index}`} label={`I${index}`} value={input} onChange={(value) => setInputAt(index, value)} />
+            ))}
+          </div>
+          <div className="mt-4 max-w-xs">
+            <BinaryInput label="Selector" value={selector} onChange={setSelector} maxLength={2} placeholder="10" />
+          </div>
+        </InputPanel>
+
+        <ExplanationCard title="Selector">
+          <p>Selector 00 memilih I0, 01 memilih I1, 10 memilih I2, dan 11 memilih I3.</p>
+        </ExplanationCard>
+
+        <DataTable
+          headers={['Input', 'Value', 'Selected']}
+          rows={result.rows.map((row) => [row.input, row.value, row.active ? 'Ya' : 'Tidak'])}
+          emptyText="Tabel muncul setelah input valid."
+        />
+      </div>
+
+      <OutputPanel title="Output" status={result.isValid ? 'Valid' : 'Tidak Valid'} tone={result.isValid ? 'success' : 'danger'}>
+        <div className="grid gap-3">
+          <StatCard label="Selected Input" value={result.selectedInput} />
+          <StatCard label="Output" value={result.output} />
+          {!result.isValid && <p className="rounded-md border border-red-300/20 bg-red-300/10 p-3 text-sm text-red-100">{result.errorMessage}</p>}
+        </div>
+      </OutputPanel>
+    </div>
+  );
+}

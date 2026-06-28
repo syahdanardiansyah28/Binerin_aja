@@ -18,60 +18,54 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 25% 10%, rgba(34, 211, 238, 0.12), transparent 28%),
-    radial-gradient(circle at 82% 18%, rgba(244, 114, 182, 0.10), transparent 24%),
-    linear-gradient(135deg, #050816 0%, #090d1f 48%, #030611 100%);
-  color: #e5f7ff;
+  background: #08090a;
+  color: #f7f8f8;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(103, 232, 249, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(103, 232, 249, 0.045) 1px, transparent 1px);
-  background-size: 38px 38px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-.cpu-card {
-  border: 1px solid rgba(103, 232, 249, 0.18);
-  background: rgba(9, 14, 31, 0.74);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 20px 60px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(16px);
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 
-.mono-chip {
-  border: 1px solid rgba(103, 232, 249, 0.24);
-  background: rgba(8, 18, 37, 0.78);
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #5e6ad2;
+  outline-offset: 2px;
 }
 
 .circuit-controls {
-  border: 1px solid rgba(103, 232, 249, 0.25);
-  background: rgba(2, 6, 23, 0.88);
-  box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0f1011;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px 0px;
 }
 
 .circuit-controls button {
-  border-bottom: 1px solid rgba(103, 232, 249, 0.16);
-  background: rgba(8, 18, 37, 0.94);
-  color: #a5f3fc;
-  fill: #a5f3fc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #141516;
+  color: #f7f8f8;
+  fill: #f7f8f8;
 }
 
 .circuit-controls button svg {
-  fill: #a5f3fc;
+  fill: #f7f8f8;
 }
 
 .circuit-controls button:hover {
-  background: rgba(34, 211, 238, 0.14);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .react-flow__edge.selected path,
 .react-flow__edge:focus path {
-  stroke: #67e8f9;
+  stroke: #828fff;
   stroke-width: 3;
 }

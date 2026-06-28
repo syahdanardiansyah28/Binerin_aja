@@ -1,3 +1,7 @@
+import Card from '../components/common/Card';
+import Container from '../components/common/Container';
+import SectionTitle from '../components/common/SectionTitle';
+
 const cards = [
   {
     title: 'Tujuan Aplikasi',
@@ -22,28 +26,26 @@ const cards = [
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto grid max-w-7xl gap-5">
-      <section className="cpu-card rounded p-5 sm:p-6">
-        <p className="font-mono text-xs uppercase tracking-[0.28em] text-cyan-200/70">About Project</p>
-        <h2 className="mt-2 text-2xl font-bold text-white md:text-3xl">Binerin Aja</h2>
-        <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-300">
-          Binerin Aja adalah web simulator berbasis React Vite dan Tailwind CSS untuk memahami ALU, operasi biner, dan gerbang logika secara visual.
-        </p>
-      </section>
+    <section className="py-8 md:py-12">
+      <Container className="grid gap-8">
+        <SectionTitle
+          label="About Project"
+          title="Binerin"
+          description="Web simulator berbasis React, Vite, Tailwind CSS, dan JavaScript untuk memahami ALU, operasi biner, dan gerbang logika secara visual."
+        />
 
-      <div className="grid gap-5 md:grid-cols-2">
-        {cards.map((card, index) => (
-          <section key={card.title} className="cpu-card rounded p-5">
-            <div className="mb-4 flex items-center justify-between gap-3">
-              <h3 className="text-lg font-semibold text-white">{card.title}</h3>
-              <span className="rounded border border-cyan-300/20 px-2 py-1 font-mono text-xs text-cyan-200/70">
-                0{index + 1}
-              </span>
-            </div>
-            <p className="text-sm leading-7 text-slate-300">{card.content}</p>
-          </section>
-        ))}
-      </div>
-    </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {cards.map((card, index) => (
+            <Card key={card.title} as="article">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h3 className="text-lg font-medium text-white">{card.title}</h3>
+                <span className="font-mono text-sm text-linear-muted">0{index + 1}</span>
+              </div>
+              <p className="text-sm leading-7 text-linear-muted">{card.content}</p>
+            </Card>
+          ))}
+        </div>
+      </Container>
+    </section>
   );
 }
