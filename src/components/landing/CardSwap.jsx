@@ -68,7 +68,7 @@ export default function CardSwap({
 
   return (
     <div
-      className="absolute bottom-0 right-0 origin-bottom-right -translate-x-[3%] translate-y-[6%] overflow-visible [perspective:1000px] max-[768px]:translate-x-[8%] max-[768px]:translate-y-[10%] max-[768px]:scale-[0.78] max-[480px]:translate-x-[10%] max-[480px]:translate-y-[8%] max-[480px]:scale-[0.58]"
+      className="absolute bottom-0 right-0 origin-bottom-right -translate-x-[8%] translate-y-[5%] overflow-visible [perspective:1100px] max-[768px]:translate-x-[4%] max-[768px]:translate-y-[10%] max-[768px]:scale-[0.74] max-[480px]:translate-x-[8%] max-[480px]:translate-y-[8%] max-[480px]:scale-[0.54]"
       style={{ width, height }}
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}

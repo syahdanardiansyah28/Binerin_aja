@@ -12,16 +12,16 @@ const gateCards = [
 
 export default function LogicGateShowcase() {
   return (
-    <div className="relative min-h-[470px] overflow-visible md:min-h-[500px]">
-      <CardSwap cardDistance={58} delay={3600} height={320} pauseOnHover verticalDistance={54} width={460}>
+    <div className="relative min-h-[500px] overflow-visible md:min-h-[520px]">
+      <CardSwap cardDistance={62} delay={3600} height={340} pauseOnHover verticalDistance={54} width={540}>
         {gateCards.map((item) => (
           <Card
             key={item.gate}
-            className="grid content-center gap-5 p-6"
+            className="grid content-between gap-5 p-7"
             aria-label={`${item.gate} logic gate card`}
           >
-            <h3 className="text-center text-4xl font-medium text-linear-strong">{item.gate}</h3>
-            <div className="h-44 rounded-lg border border-linear-border/70 bg-linear-bg p-5">
+            <h3 className="text-left text-4xl font-medium text-linear-strong">{item.gate}</h3>
+            <div className="h-48 rounded-lg border border-linear-border/70 bg-linear-bg p-6">
               <GateSymbol gate={item.gate} />
             </div>
             <div className="grid grid-cols-3 gap-3 text-center font-mono text-sm text-linear-muted">
