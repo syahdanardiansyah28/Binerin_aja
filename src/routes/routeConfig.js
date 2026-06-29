@@ -1,9 +1,11 @@
 export const appRoutes = [
-  { path: '/', label: 'Alur Evolusi' },
-  { path: '/simulasi', label: 'Simulasi' },
+  { path: '/', label: 'Home' },
+  { path: '/simulasi', label: 'Simulasi', showInNav: false },
   { path: '/tentang', label: 'Tentang' },
   { path: '/bantuan', label: 'Bantuan' },
 ];
+
+export const navigationRoutes = appRoutes.filter((route) => route.showInNav !== false);
 
 export function parseRouteTarget(target = '/') {
   const normalizedTarget = target || '/';

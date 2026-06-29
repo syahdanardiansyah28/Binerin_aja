@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../common/Button';
 import Container from '../common/Container';
 import AppLogo from './AppLogo';
-import { appRoutes } from '../../routes/routeConfig';
+import { navigationRoutes } from '../../routes/routeConfig';
 
 export default function Navbar({ currentPath, isLightMode, onNavigate, onToggleTheme, theme }) {
   const [open, setOpen] = useState(false);
@@ -20,7 +20,7 @@ export default function Navbar({ currentPath, isLightMode, onNavigate, onToggleT
         </button>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {appRoutes.map((route) => (
+          {navigationRoutes.map((route) => (
             <button
               key={route.path}
               className={`min-h-11 rounded-md px-3 text-sm transition ${
@@ -55,7 +55,7 @@ export default function Navbar({ currentPath, isLightMode, onNavigate, onToggleT
       {open && (
         <div className="border-b border-linear-border/70 bg-linear-surface lg:hidden">
           <Container className="grid gap-2 py-3">
-            {appRoutes.map((route) => (
+            {navigationRoutes.map((route) => (
               <button
                 key={route.path}
                 className={`min-h-12 rounded-md px-3 text-left text-sm ${
