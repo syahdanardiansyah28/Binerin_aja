@@ -19,6 +19,11 @@ const diagrams = {
 
 const display = (value) => (value === null || value === undefined || value === '' ? '-' : String(value));
 const coordinate = (value) => Number(value);
+const bitAt = (value, bit) => {
+  const binary = display(value);
+  if (!/^[01]{4}$/.test(binary)) return '-';
+  return binary[3 - bit];
+};
 
 export default function SimulatorCircuitDiagram({ type, title, values = {}, className = '' }) {
   const Diagram = diagrams[type] || GenericDiagram;
@@ -33,18 +38,18 @@ export default function SimulatorCircuitDiagram({ type, title, values = {}, clas
         </span>
       </div>
       <div className="p-3 md:p-4">
-        <svg className="min-h-[320px] w-full" viewBox="0 0 820 430" role="img" aria-label={title}>
+        <svg className="min-h-[360px] w-full" viewBox="0 0 960 470" role="img" aria-label={title}>
           <defs>
             <marker id={arrowId} markerHeight="10" markerWidth="10" orient="auto" refX="8" refY="5">
               <path d="M0 0 L10 5 L0 10 Z" fill={lineColor} />
             </marker>
           </defs>
-          <rect width="820" height="430" rx="18" fill={surfaceColor} />
+          <rect width="960" height="470" rx="18" fill={surfaceColor} />
           <g stroke={gridColor} strokeWidth="1">
-            <path d="M58 72 H762" />
-            <path d="M58 350 H762" />
-            <path d="M142 38 V392" />
-            <path d="M680 38 V392" />
+            <path d="M64 74 H896" />
+            <path d="M64 382 H896" />
+            <path d="M156 42 V426" />
+            <path d="M808 42 V426" />
           </g>
           <Diagram arrowId={arrowId} values={values} />
         </svg>
@@ -104,7 +109,7 @@ function ValueStack({ x, y, label, value, anchor = 'middle', active = true }) {
   );
 }
 
-function SmallValue({ x, y, label, value, anchor = 'middle', active = true, width = 94 }) {
+function SmallValue({ x, y, label, value, anchor = 'middle', active = true, width = 96 }) {
   const xPos = coordinate(x);
   const yPos = coordinate(y);
   const widthValue = coordinate(width);
@@ -114,15 +119,15 @@ function SmallValue({ x, y, label, value, anchor = 'middle', active = true, widt
     <g opacity={active ? 1 : 0.5}>
       <rect
         fill="rgb(var(--color-surface))"
-        height="40"
+        height="42"
         rx="8"
         stroke={active ? accentColor : 'rgb(var(--color-border))'}
         strokeWidth="1.5"
         width={widthValue}
         x={rectX}
-        y={yPos - 25}
+        y={yPos - 26}
       />
-      <Label x={xPos} y={yPos - 7} anchor={anchor} size="10" muted>
+      <Label x={xPos} y={yPos - 8} anchor={anchor} size="10" muted>
         {label}
       </Label>
       <Label x={xPos} y={yPos + 13} anchor={anchor} size="15">
@@ -179,7 +184,7 @@ function GateSymbol({ kind, x, y, width = 100, height = 70, label, active = true
         </>
       )}
       {gateLabel && (
-        <Label x={kind === 'not' ? xPos + w * 0.42 : xPos + w * 0.52} y={yPos + h / 2 + 6} size={w < 60 ? 9 : 16}>
+        <Label x={kind === 'not' ? xPos + w * 0.44 : xPos + w * 0.52} y={yPos + h / 2 + 5} size={w < 62 ? 9 : 16}>
           {gateLabel}
         </Label>
       )}
@@ -207,22 +212,22 @@ function MuxSymbol({ x, y, width = 110, height = 180, active = true, label = 'MU
 function HalfAdderDiagram({ arrowId, values }) {
   return (
     <g>
-      <ValueStack x="86" y="118" label="INPUT A" value={values.a} />
-      <ValueStack x="86" y="250" label="INPUT B" value={values.b} />
-      <Wire d="M136 140 H210" />
-      <Wire d="M136 272 H210" />
-      <Junction x="210" y="140" />
-      <Junction x="210" y="272" />
-      <Wire d="M210 140 C242 140 250 120 292 120" />
-      <Wire d="M210 272 C242 272 250 166 292 166" />
-      <Wire d="M210 140 C242 140 250 244 292 244" />
-      <Wire d="M210 272 C242 272 250 298 292 298" />
-      <GateSymbol kind="xor" x="292" y="92" width="132" height="94" />
-      <GateSymbol kind="and" x="292" y="224" width="132" height="94" />
-      <Wire d="M424 139 H600" arrowId={arrowId} />
-      <Wire d="M424 271 H600" arrowId={arrowId} />
-      <ValueStack x="704" y="116" label="OUTPUT SUM" value={values.sum} />
-      <ValueStack x="704" y="248" label="OUTPUT CARRY" value={values.carry} />
+      <ValueStack x="92" y="124" label="INPUT A" value={values.a} />
+      <ValueStack x="92" y="262" label="INPUT B" value={values.b} />
+      <Wire d="M142 146 H230" />
+      <Wire d="M142 284 H230" />
+      <Junction x="230" y="146" />
+      <Junction x="230" y="284" />
+      <Wire d="M230 146 C270 146 284 124 330 124" />
+      <Wire d="M230 284 C270 284 284 176 330 176" />
+      <Wire d="M230 146 C270 146 284 256 330 256" />
+      <Wire d="M230 284 C270 284 284 308 330 308" />
+      <GateSymbol kind="xor" x="330" y="96" width="146" height="106" />
+      <GateSymbol kind="and" x="330" y="238" width="146" height="88" />
+      <Wire d="M476 149 H686" arrowId={arrowId} />
+      <Wire d="M476 282 H686" arrowId={arrowId} />
+      <ValueStack x="810" y="126" label="OUTPUT SUM" value={values.sum} />
+      <ValueStack x="810" y="260" label="OUTPUT CARRY" value={values.carry} />
     </g>
   );
 }
@@ -230,32 +235,33 @@ function HalfAdderDiagram({ arrowId, values }) {
 function FullAdderDiagram({ arrowId, values }) {
   return (
     <g>
-      <ValueStack x="78" y="74" label="INPUT A" value={values.a} />
-      <ValueStack x="78" y="146" label="INPUT B" value={values.b} />
-      <ValueStack x="78" y="310" label="CARRY IN" value={values.cin} />
-      <Wire d="M130 96 H198" />
-      <Wire d="M130 168 H198" />
-      <Junction x="170" y="96" />
-      <Junction x="170" y="168" />
-      <GateSymbol kind="xor" x="198" y="72" width="104" height="82" />
-      <GateSymbol kind="and" x="198" y="210" width="104" height="72" />
-      <Wire d="M170 96 C184 96 184 232 198 232" />
-      <Wire d="M170 168 C184 168 184 260 198 260" />
-      <Wire d="M302 113 H360" />
-      <Junction x="332" y="113" />
-      <GateSymbol kind="xor" x="360" y="72" width="104" height="82" />
-      <GateSymbol kind="and" x="360" y="210" width="104" height="72" />
-      <Wire d="M332 113 C348 113 348 232 360 232" />
-      <Wire d="M130 332 H318 C342 332 342 138 360 138" />
-      <Wire d="M130 332 H318 C342 332 342 260 360 260" />
-      <Wire d="M464 113 H604" arrowId={arrowId} />
-      <ValueStack x="706" y="90" label="OUTPUT SUM" value={values.sum} />
-      <GateSymbol kind="or" x="535" y="216" width="112" height="88" />
-      <Wire d="M302 246 C350 246 474 238 535 238" />
-      <Wire d="M464 246 H535" />
-      <Wire d="M647 260 H690" arrowId={arrowId} />
-      <ValueStack x="706" y="286" label="CARRY OUT" value={values.cout} />
-      <Label x="402" y="184" size="12" muted>
+      <ValueStack x="92" y="78" label="INPUT A" value={values.a} />
+      <ValueStack x="92" y="158" label="INPUT B" value={values.b} />
+      <ValueStack x="92" y="344" label="CARRY IN" value={values.cin} />
+      <Wire d="M142 100 H236" />
+      <Wire d="M142 180 H206 V152 H236" />
+      <Junction x="190" y="100" />
+      <Junction x="206" y="180" />
+      <GateSymbol kind="xor" x="236" y="74" width="128" height="96" />
+      <Wire d="M190 100 V248 H236" />
+      <Wire d="M206 180 V294 H236" />
+      <GateSymbol kind="and" x="236" y="226" width="128" height="88" />
+      <Wire d="M364 122 H454" />
+      <Junction x="404" y="122" />
+      <GateSymbol kind="xor" x="454" y="74" width="128" height="96" />
+      <Wire d="M142 366 H414 V152 H454" />
+      <Junction x="414" y="366" />
+      <Wire d="M404 122 V330 H454" />
+      <Wire d="M414 366 H454" />
+      <GateSymbol kind="and" x="454" y="306" width="128" height="88" />
+      <Wire d="M582 122 H714" arrowId={arrowId} />
+      <ValueStack x="820" y="100" label="OUTPUT SUM" value={values.sum} />
+      <Wire d="M364 270 H650 V292 H690" />
+      <Wire d="M582 350 H690" />
+      <GateSymbol kind="or" x="690" y="268" width="122" height="100" />
+      <Wire d="M812 318 H858" arrowId={arrowId} />
+      <ValueStack x="858" y="342" label="CARRY OUT" value={values.cout} />
+      <Label x="408" y="204" size="12" muted>
         SUM = A XOR B XOR Cin
       </Label>
     </g>
@@ -264,114 +270,118 @@ function FullAdderDiagram({ arrowId, values }) {
 
 function FourBitAdderDiagram({ arrowId, values }) {
   const slices = [
-    { x: 170, bit: 0 },
-    { x: 312, bit: 1 },
-    { x: 454, bit: 2 },
-    { x: 596, bit: 3 },
+    { x: 190, bit: 0 },
+    { x: 360, bit: 1 },
+    { x: 530, bit: 2 },
+    { x: 700, bit: 3 },
   ];
 
   return (
     <g>
-      <ValueStack x="78" y="82" label="A[3:0]" value={values.a} />
-      <ValueStack x="78" y="176" label="B[3:0]" value={values.b} />
-      <ValueStack x="78" y="306" label="CARRY IN" value={values.cin} />
-      <Wire d="M130 104 H170" />
-      <Wire d="M130 198 H170" />
-      <Wire d="M130 328 H170" />
-      {slices.map((slice, index) => (
-        <FullAdderSlice key={slice.bit} x={slice.x} y="102" bit={slice.bit} />
+      <ValueStack x="92" y="80" label="A[3:0]" value={values.a} />
+      <ValueStack x="92" y="174" label="B[3:0]" value={values.b} />
+      <ValueStack x="92" y="326" label="CARRY IN" value={values.cin} />
+      <Wire d="M142 102 H850" width="3" />
+      <Wire d="M142 196 H850" width="3" />
+      <Wire d="M142 348 H850" width="3" />
+      {slices.map((slice) => (
+        <AdderBitSlice key={slice.bit} x={slice.x} y="96" bit={slice.bit} sum={bitAt(values.result, slice.bit)} />
       ))}
       {slices.slice(0, -1).map((slice, index) => (
-        <Wire key={slice.bit} d={`M${slice.x + 122} 235 H${slices[index + 1].x}`} arrowId={arrowId} width="3" />
+        <Wire key={slice.bit} d={`M${slice.x + 128} 292 H${slices[index + 1].x - 18}`} arrowId={arrowId} width="3" />
       ))}
-      <Wire d="M718 235 H762" arrowId={arrowId} />
-      <ValueStack x="760" y="260" label="CARRY OUT" value={values.cout} />
-      <SmallValue x="430" y="382" label="SUM[3:0]" value={values.result} width="120" />
+      <Wire d="M828 292 H872" arrowId={arrowId} />
+      <ValueStack x="870" y="318" label="CARRY OUT" value={values.cout} />
+      <SmallValue x="510" y="424" label="SUM[3:0]" value={values.result} width="132" />
     </g>
   );
 }
 
-function FullAdderSlice({ x, y, bit }) {
+function AdderBitSlice({ x, y, bit, sum }) {
   const xPos = coordinate(x);
   const yPos = coordinate(y);
 
   return (
     <g>
-      <Label x={xPos + 58} y={yPos - 14} size="12" muted>
+      <path d={`M${xPos - 24} ${yPos - 18} V${yPos + 220}`} stroke={gridColor} strokeWidth="1" />
+      <Label x={xPos + 54} y={yPos - 8} size="12" muted>
         bit {bit}
       </Label>
-      <GateSymbol kind="xor" x={xPos} y={yPos} width="40" height="30" />
-      <GateSymbol kind="xor" x={xPos + 56} y={yPos} width="40" height="30" />
-      <GateSymbol kind="and" x={xPos} y={yPos + 58} width="40" height="30" />
-      <GateSymbol kind="and" x={xPos + 56} y={yPos + 58} width="40" height="30" />
-      <GateSymbol kind="or" x={xPos + 88} y={yPos + 112} width="34" height="42" />
-      <Wire d={`M${xPos - 32} ${yPos + 12} H${xPos}`} width="2.5" />
-      <Wire d={`M${xPos - 32} ${yPos + 76} H${xPos}`} width="2.5" />
-      <Wire d={`M${xPos + 40} ${yPos + 15} H${xPos + 56}`} width="2.5" />
-      <Wire d={`M${xPos + 96} ${yPos + 15} V${yPos - 22}`} arrowId="" width="2.5" />
-      <Wire d={`M${xPos + 40} ${yPos + 73} H${xPos + 88}`} width="2.5" />
-      <Wire d={`M${xPos + 96} ${yPos + 73} C${xPos + 122} ${yPos + 73} ${xPos + 72} ${yPos + 126} ${xPos + 88} ${yPos + 126}`} width="2.5" />
-      <Label x={xPos + 96} y={yPos - 30} size="10" muted>
-        S{bit}
-      </Label>
+      <SmallValue x={xPos + 110} y={yPos - 24} label={`S${bit}`} value={sum} width="58" />
+      <GateSymbol kind="xor" x={xPos} y={yPos + 22} width="46" height="34" />
+      <GateSymbol kind="xor" x={xPos + 64} y={yPos + 22} width="46" height="34" />
+      <GateSymbol kind="and" x={xPos} y={yPos + 106} width="46" height="34" />
+      <GateSymbol kind="and" x={xPos + 64} y={yPos + 106} width="46" height="34" />
+      <GateSymbol kind="or" x={xPos + 92} y={yPos + 170} width="50" height="56" />
+      <Wire d={`M${xPos - 22} 102 H${xPos}`} width="2.5" />
+      <Wire d={`M${xPos - 22} 196 H${xPos}`} width="2.5" />
+      <Wire d={`M${xPos + 46} ${yPos + 39} H${xPos + 64}`} width="2.5" />
+      <Wire d={`M${xPos + 110} ${yPos + 39} V${yPos - 4}`} arrowId="" width="2.5" />
+      <Wire d={`M${xPos + 20} 348 V${yPos + 39} H${xPos + 64}`} width="2.5" />
+      <Wire d={`M${xPos + 20} 348 V${yPos + 124} H${xPos + 64}`} width="2.5" />
+      <Wire d={`M${xPos + 46} ${yPos + 123} H${xPos + 92}`} width="2.5" />
+      <Wire d={`M${xPos + 110} ${yPos + 123} V${yPos + 190} H${xPos + 92}`} width="2.5" />
+      <Wire d={`M${xPos + 142} ${yPos + 198} H${xPos + 128} V292`} width="2.5" />
     </g>
   );
 }
 
 function SubtractorDiagram({ arrowId, values }) {
   const slices = [
-    { x: 170, bit: 0 },
-    { x: 312, bit: 1 },
-    { x: 454, bit: 2 },
-    { x: 596, bit: 3 },
+    { x: 190, bit: 0 },
+    { x: 360, bit: 1 },
+    { x: 530, bit: 2 },
+    { x: 700, bit: 3 },
   ];
 
   return (
     <g>
-      <ValueStack x="78" y="82" label="A[3:0]" value={values.a} />
-      <ValueStack x="78" y="176" label="B[3:0]" value={values.b} />
-      <SmallValue x="78" y="326" label="BORROW IN" value="0" />
-      <Wire d="M130 104 H170" />
-      <Wire d="M130 198 H170" />
-      <Wire d="M125 326 H170" />
+      <ValueStack x="92" y="80" label="A[3:0]" value={values.a} />
+      <ValueStack x="92" y="174" label="B[3:0]" value={values.b} />
+      <SmallValue x="92" y="348" label="BORROW IN" value="0" width="112" />
+      <Wire d="M142 102 H850" width="3" />
+      <Wire d="M142 196 H850" width="3" />
+      <Wire d="M148 348 H850" width="3" />
       {slices.map((slice) => (
-        <FullSubtractorSlice key={slice.bit} x={slice.x} y="96" bit={slice.bit} />
+        <SubtractorBitSlice key={slice.bit} x={slice.x} y="96" bit={slice.bit} diff={bitAt(values.result, slice.bit)} />
       ))}
       {slices.slice(0, -1).map((slice, index) => (
-        <Wire key={slice.bit} d={`M${slice.x + 124} 205 H${slices[index + 1].x}`} arrowId={arrowId} width="3" />
+        <Wire key={slice.bit} d={`M${slice.x + 130} 292 H${slices[index + 1].x - 18}`} arrowId={arrowId} width="3" />
       ))}
-      <Wire d="M720 205 H762" arrowId={arrowId} />
-      <ValueStack x="760" y="230" label="BORROW OUT" value={values.borrowOut} />
-      <SmallValue x="430" y="382" label="DIFF[3:0]" value={values.result} width="120" />
+      <Wire d="M830 292 H872" arrowId={arrowId} />
+      <ValueStack x="872" y="318" label="BORROW OUT" value={values.borrowOut} />
+      <SmallValue x="510" y="424" label="DIFF[3:0]" value={values.result} width="132" />
     </g>
   );
 }
 
-function FullSubtractorSlice({ x, y, bit }) {
+function SubtractorBitSlice({ x, y, bit, diff }) {
   const xPos = coordinate(x);
   const yPos = coordinate(y);
 
   return (
     <g>
-      <Label x={xPos + 58} y={yPos - 8} size="12" muted>
+      <path d={`M${xPos - 24} ${yPos - 18} V${yPos + 220}`} stroke={gridColor} strokeWidth="1" />
+      <Label x={xPos + 54} y={yPos - 8} size="12" muted>
         bit {bit}
       </Label>
-      <GateSymbol kind="xor" x={xPos} y={yPos + 6} width="38" height="28" />
-      <GateSymbol kind="xor" x={xPos + 54} y={yPos + 6} width="38" height="28" />
-      <GateSymbol kind="not" x={xPos} y={yPos + 58} width="28" height="28" />
-      <GateSymbol kind="and" x={xPos + 42} y={yPos + 54} width="38" height="28" />
-      <GateSymbol kind="and" x={xPos + 42} y={yPos + 94} width="38" height="28" />
-      <GateSymbol kind="or" x={xPos + 90} y={yPos + 84} width="34" height="50" />
-      <Wire d={`M${xPos - 32} ${yPos + 18} H${xPos}`} width="2.5" />
-      <Wire d={`M${xPos - 32} ${yPos + 72} H${xPos}`} width="2.5" />
-      <Wire d={`M${xPos + 38} ${yPos + 20} H${xPos + 54}`} width="2.5" />
-      <Wire d={`M${xPos + 92} ${yPos + 20} V${yPos - 22}`} arrowId="" width="2.5" />
-      <Wire d={`M${xPos + 36} ${yPos + 72} H${xPos + 42}`} width="2.5" />
-      <Wire d={`M${xPos + 80} ${yPos + 68} H${xPos + 90}`} width="2.5" />
-      <Wire d={`M${xPos + 80} ${yPos + 108} H${xPos + 90}`} width="2.5" />
-      <Label x={xPos + 92} y={yPos - 30} size="10" muted>
-        D{bit}
-      </Label>
+      <SmallValue x={xPos + 110} y={yPos - 24} label={`D${bit}`} value={diff} width="58" />
+      <GateSymbol kind="xor" x={xPos} y={yPos + 22} width="46" height="34" />
+      <GateSymbol kind="xor" x={xPos + 64} y={yPos + 22} width="46" height="34" />
+      <GateSymbol kind="not" x={xPos} y={yPos + 116} width="30" height="30" />
+      <GateSymbol kind="and" x={xPos + 52} y={yPos + 108} width="44" height="34" />
+      <GateSymbol kind="and" x={xPos + 52} y={yPos + 158} width="44" height="34" />
+      <GateSymbol kind="or" x={xPos + 92} y={yPos + 174} width="50" height="56" />
+      <Wire d={`M${xPos - 22} 102 H${xPos}`} width="2.5" />
+      <Wire d={`M${xPos - 22} 196 H${xPos}`} width="2.5" />
+      <Wire d={`M${xPos + 46} ${yPos + 39} H${xPos + 64}`} width="2.5" />
+      <Wire d={`M${xPos + 110} ${yPos + 39} V${yPos - 4}`} arrowId="" width="2.5" />
+      <Wire d={`M${xPos + 38} ${yPos + 131} H${xPos + 52}`} width="2.5" />
+      <Wire d={`M${xPos + 20} 348 V${yPos + 39} H${xPos + 64}`} width="2.5" />
+      <Wire d={`M${xPos + 20} 348 V${yPos + 176} H${xPos + 52}`} width="2.5" />
+      <Wire d={`M${xPos + 96} ${yPos + 126} H${xPos + 110} V${yPos + 192} H${xPos + 92}`} width="2.5" />
+      <Wire d={`M${xPos + 96} ${yPos + 176} H${xPos + 92}`} width="2.5" />
+      <Wire d={`M${xPos + 142} ${yPos + 202} H${xPos + 130} V292`} width="2.5" />
     </g>
   );
 }
@@ -383,41 +393,41 @@ function MultiplexerDiagram({ arrowId, values }) {
   return (
     <g>
       {inputRows.map((index) => {
-        const y = 76 + index * 72;
+        const y = 82 + index * 74;
         const active = selectedIndex === index;
         return (
           <g key={index}>
-            <SmallValue x="88" y={y + 6} label={`INPUT I${index}`} value={values.inputs?.[index]} active={active} />
-            <Wire d={`M136 ${y} H288`} active={active} width={active ? 5 : 3} />
+            <SmallValue x="98" y={y + 6} label={`INPUT I${index}`} value={values.inputs?.[index]} active={active} />
+            <Wire d={`M146 ${y} H336`} active={active} width={active ? 5 : 3} />
           </g>
         );
       })}
-      <SmallValue x="92" y="376" label="SELECTOR" value={values.selector} width="108" />
-      <GateSymbol kind="not" x="188" y="342" width="34" height="28" />
-      <GateSymbol kind="not" x="262" y="342" width="34" height="28" />
-      <Label x="208" y="388" size="10" muted>
+      <SmallValue x="112" y="400" label="SELECTOR" value={values.selector} width="112" />
+      <GateSymbol kind="not" x="226" y="366" width="36" height="30" />
+      <GateSymbol kind="not" x="312" y="366" width="36" height="30" />
+      <Label x="248" y="416" size="10" muted>
         S1'
       </Label>
-      <Label x="282" y="388" size="10" muted>
+      <Label x="334" y="416" size="10" muted>
         S0'
       </Label>
       {inputRows.map((index) => {
-        const y = 52 + index * 72;
+        const y = 56 + index * 74;
         const active = selectedIndex === index;
         const term = ["I0 S1' S0'", "I1 S1' S0", "I2 S1 S0'", 'I3 S1 S0'][index];
         return (
           <g key={`and-${index}`}>
-            <GateSymbol kind="and" x="292" y={y} width="104" height="52" active={active} />
-            <Label x="344" y={y + 68} size="10" muted>
+            <GateSymbol kind="and" x="336" y={y} width="118" height="54" active={active} />
+            <Label x="395" y={y + 70} size="10" muted>
               {term}
             </Label>
-            <Wire d={`M396 ${y + 26} H500`} active={active} width={active ? 4 : 3} />
+            <Wire d={`M454 ${y + 27} H610`} active={active} width={active ? 4 : 3} />
           </g>
         );
       })}
-      <GateSymbol kind="or" x="500" y="100" width="116" height="188" />
-      <Wire d="M616 194 H674" arrowId={arrowId} />
-      <ValueStack x="728" y="172" label={`OUTPUT ${display(values.selectedInput)}`} value={values.output} />
+      <GateSymbol kind="or" x="610" y="108" width="132" height="196" />
+      <Wire d="M742 206 H818" arrowId={arrowId} />
+      <ValueStack x="870" y="184" label={`OUTPUT ${display(values.selectedInput)}`} value={values.output} />
     </g>
   );
 }
@@ -431,34 +441,34 @@ function AluDiagram({ arrowId, values }) {
 
   return (
     <g>
-      <ValueStack x="80" y="86" label="REGISTER A" value={values.a} />
-      <ValueStack x="80" y="218" label="REGISTER B" value={values.b} />
-      <Wire d="M132 108 H212" />
-      <Wire d="M132 240 H212" />
-      <Junction x="178" y="108" />
-      <Junction x="178" y="240" />
-      <Wire d="M178 108 C204 108 204 78 232 78" active={isAndActive} />
-      <Wire d="M178 240 C204 240 204 112 232 112" active={isAndActive} />
-      <Wire d="M178 108 C204 108 204 148 232 148" active={isOrActive} />
-      <Wire d="M178 240 C204 240 204 184 232 184" active={isOrActive} />
-      <Wire d="M178 108 C204 108 204 232 232 232" active={isAddActive} />
-      <Wire d="M178 240 H232" active={isAddActive} />
-      <Wire d="M178 108 C204 108 204 320 232 320" active={isSubActive} />
-      <Wire d="M178 240 C204 240 204 344 232 344" active={isSubActive} />
-      <GateSymbol kind="and" x="232" y="56" width="96" height="70" active={isAndActive} />
-      <GateSymbol kind="or" x="232" y="132" width="96" height="70" active={isOrActive} />
-      <MiniAdderNetwork x="232" y="216" active={isAddActive} />
-      <MiniSubtractorNetwork x="232" y="302" active={isSubActive} />
-      <Wire d="M328 91 H500" active={isAndActive} />
-      <Wire d="M328 167 H500" active={isOrActive} />
-      <Wire d="M380 248 H500" active={isAddActive} />
-      <Wire d="M380 334 H500" active={isSubActive} />
-      <MuxSymbol x="500" y="92" width="130" height="250" />
-      <Label x="560" y="368" size="12" muted>
+      <ValueStack x="92" y="88" label="REGISTER A" value={values.a} />
+      <ValueStack x="92" y="230" label="REGISTER B" value={values.b} />
+      <Wire d="M142 110 H240" />
+      <Wire d="M142 252 H240" />
+      <Junction x="200" y="110" />
+      <Junction x="200" y="252" />
+      <Wire d="M200 110 C224 110 224 80 260 80" active={isAndActive} />
+      <Wire d="M200 252 C224 252 224 114 260 114" active={isAndActive} />
+      <Wire d="M200 110 C224 110 224 156 260 156" active={isOrActive} />
+      <Wire d="M200 252 C224 252 224 190 260 190" active={isOrActive} />
+      <Wire d="M200 110 C224 110 224 246 260 246" active={isAddActive} />
+      <Wire d="M200 252 H260" active={isAddActive} />
+      <Wire d="M200 110 C224 110 224 340 260 340" active={isSubActive} />
+      <Wire d="M200 252 C224 252 224 364 260 364" active={isSubActive} />
+      <GateSymbol kind="and" x="260" y="58" width="104" height="74" active={isAndActive} />
+      <GateSymbol kind="or" x="260" y="140" width="104" height="74" active={isOrActive} />
+      <MiniAdderNetwork x="260" y="230" active={isAddActive} />
+      <MiniSubtractorNetwork x="260" y="324" active={isSubActive} />
+      <Wire d="M364 95 H574" active={isAndActive} />
+      <Wire d="M364 177 H574" active={isOrActive} />
+      <Wire d="M424 264 H574" active={isAddActive} />
+      <Wire d="M424 358 H574" active={isSubActive} />
+      <MuxSymbol x="574" y="94" width="142" height="274" />
+      <Label x="642" y="398" size="12" muted>
         selector {display(values.selector)} / {operation}
       </Label>
-      <Wire d="M630 217 H680" arrowId={arrowId} />
-      <ValueStack x="740" y="194" label="OUTPUT X" value={values.result} />
+      <Wire d="M716 231 H804" arrowId={arrowId} />
+      <ValueStack x="872" y="208" label="OUTPUT X" value={values.result} />
     </g>
   );
 }
@@ -469,15 +479,15 @@ function MiniAdderNetwork({ x, y, active = true }) {
 
   return (
     <g opacity={active ? 1 : 0.45}>
-      <Label x={xPos + 74} y={yPos - 10} size="10" muted>
+      <Label x={xPos + 84} y={yPos - 10} size="10" muted>
         ADD
       </Label>
-      <GateSymbol kind="xor" x={xPos} y={yPos} width="36" height="26" active={active} />
-      <GateSymbol kind="xor" x={xPos + 48} y={yPos} width="36" height="26" active={active} />
-      <GateSymbol kind="and" x={xPos} y={yPos + 36} width="36" height="26" active={active} />
-      <GateSymbol kind="or" x={xPos + 92} y={yPos + 34} width="44" height="34" active={active} />
-      <Wire d={`M${xPos + 36} ${yPos + 13} H${xPos + 48}`} active={active} width="2.5" />
-      <Wire d={`M${xPos + 84} ${yPos + 13} H${xPos + 148}`} active={active} width="2.5" />
+      <GateSymbol kind="xor" x={xPos} y={yPos} width="42" height="30" active={active} />
+      <GateSymbol kind="xor" x={xPos + 58} y={yPos} width="42" height="30" active={active} />
+      <GateSymbol kind="and" x={xPos} y={yPos + 44} width="42" height="30" active={active} />
+      <GateSymbol kind="or" x={xPos + 104} y={yPos + 42} width="50" height="40" active={active} />
+      <Wire d={`M${xPos + 42} ${yPos + 15} H${xPos + 58}`} active={active} width="2.5" />
+      <Wire d={`M${xPos + 100} ${yPos + 15} H${xPos + 164}`} active={active} width="2.5" />
     </g>
   );
 }
@@ -488,15 +498,15 @@ function MiniSubtractorNetwork({ x, y, active = true }) {
 
   return (
     <g opacity={active ? 1 : 0.45}>
-      <Label x={xPos + 74} y={yPos - 10} size="10" muted>
+      <Label x={xPos + 84} y={yPos - 10} size="10" muted>
         SUB
       </Label>
-      <GateSymbol kind="xor" x={xPos} y={yPos} width="36" height="26" active={active} />
-      <GateSymbol kind="not" x={xPos} y={yPos + 38} width="28" height="24" active={active} />
-      <GateSymbol kind="and" x={xPos + 48} y={yPos + 34} width="36" height="26" active={active} />
-      <GateSymbol kind="or" x={xPos + 92} y={yPos + 30} width="44" height="38" active={active} />
-      <Wire d={`M${xPos + 36} ${yPos + 13} H${xPos + 148}`} active={active} width="2.5" />
-      <Wire d={`M${xPos + 84} ${yPos + 47} H${xPos + 92}`} active={active} width="2.5" />
+      <GateSymbol kind="xor" x={xPos} y={yPos} width="42" height="30" active={active} />
+      <GateSymbol kind="not" x={xPos} y={yPos + 46} width="32" height="26" active={active} />
+      <GateSymbol kind="and" x={xPos + 58} y={yPos + 42} width="42" height="30" active={active} />
+      <GateSymbol kind="or" x={xPos + 104} y={yPos + 38} width="50" height="44" active={active} />
+      <Wire d={`M${xPos + 42} ${yPos + 15} H${xPos + 164}`} active={active} width="2.5" />
+      <Wire d={`M${xPos + 100} ${yPos + 57} H${xPos + 104}`} active={active} width="2.5" />
     </g>
   );
 }
@@ -505,10 +515,10 @@ function GenericDiagram({ arrowId, values }) {
   return (
     <g>
       <ValueStack x="94" y="166" label="INPUT" value={values.input} />
-      <GateSymbol kind="and" x="310" y="140" width="110" height="80" />
-      <Wire d="M154 188 H310" />
-      <Wire d="M420 180 H578" arrowId={arrowId} />
-      <ValueStack x="654" y="166" label="OUTPUT" value={values.output} />
+      <GateSymbol kind="and" x="330" y="140" width="130" height="90" />
+      <Wire d="M154 188 H330" />
+      <Wire d="M460 185 H650" arrowId={arrowId} />
+      <ValueStack x="754" y="166" label="OUTPUT" value={values.output} />
     </g>
   );
 }
