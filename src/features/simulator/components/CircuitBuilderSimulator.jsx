@@ -44,6 +44,7 @@ const makeBaseData = (item, onToggle) => ({
 
 export default function CircuitBuilderSimulator() {
   const nodeCounter = useRef(4);
+  const [selectedComponentKey, setSelectedComponentKey] = useState(`${circuitPalette[0].kind}-${circuitPalette[0].label}`);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [selectedEdgeId, setSelectedEdgeId] = useState(null);
   const [selectedNodeIds, setSelectedNodeIds] = useState([]);
@@ -106,6 +107,10 @@ export default function CircuitBuilderSimulator() {
 
   const selectedNode = useMemo(() => nodes.find((node) => node.id === selectedNodeId), [nodes, selectedNodeId]);
   const selectedEdge = useMemo(() => edges.find((edge) => edge.id === selectedEdgeId), [edges, selectedEdgeId]);
+  const selectedComponent = useMemo(
+    () => circuitPalette.find((item) => `${item.kind}-${item.label}` === selectedComponentKey) || circuitPalette[0],
+    [selectedComponentKey],
+  );
 
   const onConnect = useCallback(
     (connection) => {
@@ -238,42 +243,42 @@ export default function CircuitBuilderSimulator() {
   const statusTone = simulationStatus === 'Success' ? 'border-linear-success/30 bg-linear-successSurface text-linear-successText' : 'border-linear-border/70 bg-linear-surface2 text-linear-muted';
 
   return (
-    <div className="grid gap-5 xl:grid-cols-[240px_minmax(0,1fr)_320px]">
-      <Card as="aside" className="content-start">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <h3 className="text-lg font-medium text-linear-strong">Components</h3>
-          <span className="font-mono text-sm text-linear-muted">{nodes.length}/{MAX_CIRCUIT_NODES}</span>
-        </div>
-        <div className="flex gap-2 overflow-x-auto pb-1 xl:grid xl:overflow-visible xl:pb-0">
-          {circuitPalette.map((item) => (
-            <button
-              key={`${item.kind}-${item.label}`}
-              className="min-h-12 min-w-[132px] rounded-md border border-linear-border/70 bg-linear-surface2 px-3 py-2 text-left text-sm text-linear-muted transition hover:bg-linear-line/40 hover:text-linear-text xl:min-w-0"
-              type="button"
-              onClick={() => addComponent(item)}
-            >
-              <span className="block font-medium text-linear-text">{item.label}</span>
-              <span className="mt-1 block text-xs">Add node</span>
-            </button>
-          ))}
-        </div>
-      </Card>
-
+    <div className="grid gap-5">
       <Card className="min-w-0 overflow-hidden p-3 md:p-4">
-        <div className="mb-3 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div>
+        <div className="mb-3 grid gap-3 xl:grid-cols-[1fr_auto] xl:items-center">
+          <div className="flex flex-wrap items-center gap-3">
             <h3 className="text-lg font-medium text-linear-strong">Circuit Canvas</h3>
-            <p className="mt-1 text-sm text-linear-muted">Node limit dan edge limit dijaga agar canvas tetap ringan.</p>
+            <span className="rounded-full border border-linear-border/70 bg-linear-surface2 px-3 py-1 font-mono text-xs text-linear-muted">
+              {nodes.length}/{MAX_CIRCUIT_NODES}
+            </span>
           </div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:flex">
+
+          <div className="grid gap-2 sm:grid-cols-[minmax(180px,260px)_auto_auto_auto_auto_auto]">
+            <label className="sr-only" htmlFor="circuit-component-select">Components</label>
+            <select
+              id="circuit-component-select"
+              className="min-h-11 rounded-md border border-linear-border/70 bg-linear-surface2 px-3 text-sm font-medium text-linear-text outline-none transition focus:border-linear-accent"
+              value={selectedComponentKey}
+              onChange={(event) => setSelectedComponentKey(event.target.value)}
+            >
+              {circuitPalette.map((item) => {
+                const key = `${item.kind}-${item.label}`;
+                return (
+                  <option key={key} value={key}>
+                    {item.label}
+                  </option>
+                );
+              })}
+            </select>
+            <Button className="rounded-md" variant="outline" onClick={() => addComponent(selectedComponent)}>Add</Button>
             <Button className="rounded-md" variant="primary" onClick={runSimulation}>Run</Button>
             <Button className="rounded-md" variant="outline" onClick={deleteSelected}>Delete</Button>
             <Button className="rounded-md" variant="outline" onClick={resetCanvas}>Reset</Button>
-            <Button className="rounded-md" variant="danger" onClick={clearConnections}>Clear Cables</Button>
+            <Button className="rounded-md" variant="danger" onClick={clearConnections}>Clear</Button>
           </div>
         </div>
 
-        <div className="h-[520px] overflow-hidden rounded-lg border border-linear-border/70 bg-linear-bg md:h-[640px]">
+        <div className="h-[560px] overflow-hidden rounded-lg border border-linear-border/70 bg-linear-bg md:h-[680px]">
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -305,7 +310,7 @@ export default function CircuitBuilderSimulator() {
         </div>
       </Card>
 
-      <aside className="grid content-start gap-5">
+      <div className="grid gap-5 lg:grid-cols-3">
         <Card>
           <h3 className="text-lg font-medium text-linear-strong">Simulation Status</h3>
           <div className={`mt-4 rounded-md border p-3 text-sm leading-6 ${statusTone}`}>
@@ -331,12 +336,12 @@ export default function CircuitBuilderSimulator() {
             </div>
           ) : selectedEdge ? (
             <div className="mt-4 grid gap-3 text-sm text-linear-muted">
-              <Property label="Selected Cable" value={selectedEdge.id} />
+              <Property label="Cable" value={selectedEdge.id} />
               <Property label="Route" value={`${selectedEdge.source}:${selectedEdge.sourceHandle || 'out'} -> ${selectedEdge.target}:${selectedEdge.targetHandle || 'in'}`} />
               <Button className="rounded-md" variant="danger" onClick={deleteSelected}>Delete Cable</Button>
             </div>
           ) : (
-            <p className="mt-4 text-sm leading-6 text-linear-muted">Pilih node atau kabel untuk melihat statusnya.</p>
+            <div className="mt-4 rounded-md border border-linear-border/70 bg-linear-surface2 p-3 font-mono text-sm text-linear-muted">-</div>
           )}
         </Card>
 
@@ -351,7 +356,7 @@ export default function CircuitBuilderSimulator() {
             ))}
           </div>
         </Card>
-      </aside>
+      </div>
     </div>
   );
 }
