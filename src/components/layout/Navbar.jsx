@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../common/Button';
 import Container from '../common/Container';
 import AppLogo from './AppLogo';
-import { appRoutes } from '../../routes/routeConfig';
+import { navigationRoutes } from '../../routes/routeConfig';
 
 export default function Navbar({ currentPath, isLightMode, onNavigate, onToggleTheme, theme }) {
   const [open, setOpen] = useState(false);
@@ -14,13 +14,13 @@ export default function Navbar({ currentPath, isLightMode, onNavigate, onToggleT
 
   return (
     <header className="sticky top-0 z-30 h-[72px] border-b border-linear-border/70 bg-linear-bg/95 shadow-hairline">
-      <Container className="flex h-full items-center justify-between gap-4">
-        <button className="min-w-0 text-left" type="button" onClick={() => handleNavigate('/')}>
+      <Container className="flex h-full items-center justify-between gap-4 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+        <button className="inline-flex min-w-0 items-center text-left lg:justify-self-start" type="button" onClick={() => handleNavigate('/')}>
           <AppLogo />
         </button>
 
-        <nav className="hidden items-center gap-1 lg:flex">
-          {appRoutes.map((route) => (
+        <nav className="hidden items-center justify-center gap-1 lg:flex lg:justify-self-center">
+          {navigationRoutes.map((route) => (
             <button
               key={route.path}
               className={`min-h-11 rounded-md px-3 text-sm transition ${
@@ -34,12 +34,12 @@ export default function Navbar({ currentPath, isLightMode, onNavigate, onToggleT
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 lg:flex lg:justify-self-end">
           <ThemeToggle isLightMode={isLightMode} onToggle={onToggleTheme} theme={theme} />
           <Button variant="primary" onClick={() => handleNavigate('/simulasi')}>Mulai Simulasi</Button>
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
           <ThemeToggle isLightMode={isLightMode} onToggle={onToggleTheme} theme={theme} />
           <button
             className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-linear-border/70 bg-linear-surface2 text-linear-text"
@@ -55,7 +55,7 @@ export default function Navbar({ currentPath, isLightMode, onNavigate, onToggleT
       {open && (
         <div className="border-b border-linear-border/70 bg-linear-surface lg:hidden">
           <Container className="grid gap-2 py-3">
-            {appRoutes.map((route) => (
+            {navigationRoutes.map((route) => (
               <button
                 key={route.path}
                 className={`min-h-12 rounded-md px-3 text-left text-sm ${

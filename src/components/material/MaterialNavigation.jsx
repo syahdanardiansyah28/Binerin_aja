@@ -8,7 +8,7 @@ export default function MaterialNavigation({ material, onNavigate }) {
       <p className="mt-4 text-sm leading-7 text-linear-muted md:text-base">{material.nextRelation}</p>
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <Button onClick={() => onNavigate(`/simulasi?tab=${material.simulationTab}`)}>Coba Simulasi</Button>
-        <Button variant="outline" onClick={() => onNavigate('/')}>Kembali ke Alur Evolusi</Button>
+        <Button variant="outline" onClick={() => onNavigate('/')}>Kembali ke Home</Button>
       </div>
     </Card>
   );

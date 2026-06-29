@@ -43,8 +43,8 @@ export default function SimulationPage({ search = '' }) {
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <SectionTitle
             label="Simulation Workspace"
-            title="Simulasi digital modular."
-            description="Pilih fitur, ubah input biner, lalu baca output dan tabel prosesnya."
+            title="Ayo Pelajari!"
+            description="Pilih salah satu simulasi, ubah nilai input biner, lalu amati bagaimana setiap rangkaian digital memproses data menjadi output. Setiap fitur menampilkan input, visual rangkaian, hasil keluaran, rumus singkat, dan tabel proses agar alur kerja gerbang logika hingga ALU lebih mudah dipahami."
           />
         </div>
 
