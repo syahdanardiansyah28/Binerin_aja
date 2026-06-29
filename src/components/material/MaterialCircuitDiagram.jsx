@@ -16,8 +16,18 @@ const diagramById = {
   alu: AluDiagram,
 };
 
+const compactDiagramById = {
+  'logic-gates': CompactLogicGatesDiagram,
+  'half-adder': CompactHalfAdderDiagram,
+  'full-adder': CompactFullAdderDiagram,
+  'four-bit-adder': CompactFourBitAdderDiagram,
+  subtractor: CompactSubtractorDiagram,
+  multiplexer: CompactMultiplexerDiagram,
+  alu: CompactAluDiagram,
+};
+
 export default function MaterialCircuitDiagram({ material, compact = false }) {
-  const Diagram = diagramById[material.id] || GenericDiagram;
+  const Diagram = (compact ? compactDiagramById[material.id] : diagramById[material.id]) || GenericDiagram;
   const arrowId = `diagram-arrow-${material.id}-${compact ? 'compact' : 'full'}`;
 
   return (
@@ -70,6 +80,10 @@ function Label({ x, y, children, anchor = 'middle', size = 16, muted = false, we
 }
 
 function Gate({ kind, x, y, width = 92, height = 64, label, muted = false }) {
+  const xPos = Number(x);
+  const yPos = Number(y);
+  const gateWidth = Number(width);
+  const gateHeight = Number(height);
   const stroke = muted ? mutedColor : accentColor;
   const gateLabel = label === undefined ? kind.toUpperCase() : label;
 
@@ -77,7 +91,7 @@ function Gate({ kind, x, y, width = 92, height = 64, label, muted = false }) {
     <g opacity={muted ? 0.55 : 1}>
       {kind === 'and' && (
         <path
-          d={`M${x} ${y} H${x + width * 0.5} C${x + width} ${y} ${x + width} ${y + height} ${x + width * 0.5} ${y + height} H${x} Z`}
+          d={`M${xPos} ${yPos} H${xPos + gateWidth * 0.5} C${xPos + gateWidth} ${yPos} ${xPos + gateWidth} ${yPos + gateHeight} ${xPos + gateWidth * 0.5} ${yPos + gateHeight} H${xPos} Z`}
           fill={fillColor}
           stroke={stroke}
           strokeLinejoin="round"
@@ -88,7 +102,7 @@ function Gate({ kind, x, y, width = 92, height = 64, label, muted = false }) {
         <>
           {kind === 'xor' && (
             <path
-              d={`M${x - 10} ${y} C${x + width * 0.08} ${y + height * 0.28} ${x + width * 0.08} ${y + height * 0.72} ${x - 10} ${y + height}`}
+              d={`M${xPos - 10} ${yPos} C${xPos + gateWidth * 0.08} ${yPos + gateHeight * 0.28} ${xPos + gateWidth * 0.08} ${yPos + gateHeight * 0.72} ${xPos - 10} ${yPos + gateHeight}`}
               fill="none"
               stroke={stroke}
               strokeLinecap="round"
@@ -96,7 +110,7 @@ function Gate({ kind, x, y, width = 92, height = 64, label, muted = false }) {
             />
           )}
           <path
-            d={`M${x} ${y} C${x + width * 0.36} ${y} ${x + width * 0.78} ${y} ${x + width} ${y + height / 2} C${x + width * 0.78} ${y + height} ${x + width * 0.36} ${y + height} ${x} ${y + height} C${x + width * 0.2} ${y + height * 0.66} ${x + width * 0.2} ${y + height * 0.34} ${x} ${y} Z`}
+            d={`M${xPos} ${yPos} C${xPos + gateWidth * 0.36} ${yPos} ${xPos + gateWidth * 0.78} ${yPos} ${xPos + gateWidth} ${yPos + gateHeight / 2} C${xPos + gateWidth * 0.78} ${yPos + gateHeight} ${xPos + gateWidth * 0.36} ${yPos + gateHeight} ${xPos} ${yPos + gateHeight} C${xPos + gateWidth * 0.2} ${yPos + gateHeight * 0.66} ${xPos + gateWidth * 0.2} ${yPos + gateHeight * 0.34} ${xPos} ${yPos} Z`}
             fill={fillColor}
             stroke={stroke}
             strokeLinejoin="round"
@@ -106,12 +120,12 @@ function Gate({ kind, x, y, width = 92, height = 64, label, muted = false }) {
       )}
       {kind === 'not' && (
         <>
-          <path d={`M${x} ${y} L${x} ${y + height} L${x + width} ${y + height / 2} Z`} fill={fillColor} stroke={stroke} strokeLinejoin="round" strokeWidth="3" />
-          <circle cx={x + width + 7} cy={y + height / 2} fill={surfaceColor} r="7" stroke={stroke} strokeWidth="3" />
+          <path d={`M${xPos} ${yPos} L${xPos} ${yPos + gateHeight} L${xPos + gateWidth} ${yPos + gateHeight / 2} Z`} fill={fillColor} stroke={stroke} strokeLinejoin="round" strokeWidth="3" />
+          <circle cx={xPos + gateWidth + 7} cy={yPos + gateHeight / 2} fill={surfaceColor} r="7" stroke={stroke} strokeWidth="3" />
         </>
       )}
       {gateLabel && (
-        <Label x={kind === 'not' ? x + width * 0.42 : x + width * 0.52} y={y + height / 2 + 5} size={width < 54 ? 8 : 13}>
+        <Label x={kind === 'not' ? xPos + gateWidth * 0.42 : xPos + gateWidth * 0.52} y={yPos + gateHeight / 2 + 5} size={gateWidth < 54 ? 8 : 13}>
           {gateLabel}
         </Label>
       )}
@@ -120,12 +134,196 @@ function Gate({ kind, x, y, width = 92, height = 64, label, muted = false }) {
 }
 
 function Mux({ x, y, width = 112, height = 174, label = 'MUX' }) {
+  const xPos = Number(x);
+  const yPos = Number(y);
+  const muxWidth = Number(width);
+  const muxHeight = Number(height);
+
   return (
     <g>
-      <path d={`M${x} ${y} H${x + width * 0.64} L${x + width} ${y + height / 2} L${x + width * 0.64} ${y + height} H${x} Z`} fill={fillColor} stroke={accentColor} strokeWidth="3" />
-      <Label x={x + width * 0.48} y={y + height / 2 + 7} size={18}>
+      <path d={`M${xPos} ${yPos} H${xPos + muxWidth * 0.64} L${xPos + muxWidth} ${yPos + muxHeight / 2} L${xPos + muxWidth * 0.64} ${yPos + muxHeight} H${xPos} Z`} fill={fillColor} stroke={accentColor} strokeWidth="3" />
+      <Label x={xPos + muxWidth * 0.48} y={yPos + muxHeight / 2 + 7} size={18}>
         {label}
       </Label>
+    </g>
+  );
+}
+
+function Block({ x, y, width = 96, height = 58, label, muted = false }) {
+  const xPos = Number(x);
+  const yPos = Number(y);
+  const blockWidth = Number(width);
+  const blockHeight = Number(height);
+
+  return (
+    <g opacity={muted ? 0.55 : 1}>
+      <rect
+        fill={fillColor}
+        height={blockHeight}
+        rx="10"
+        stroke={muted ? mutedColor : accentColor}
+        strokeWidth="3"
+        width={blockWidth}
+        x={xPos}
+        y={yPos}
+      />
+      <Label x={xPos + blockWidth / 2} y={yPos + blockHeight / 2 + 5} size="14">
+        {label}
+      </Label>
+    </g>
+  );
+}
+
+function CompactLogicGatesDiagram({ arrowId }) {
+  return (
+    <g>
+      <Label x="60" y="126" anchor="start" size="14">A</Label>
+      <Label x="60" y="232" anchor="start" size="14">B</Label>
+      <Wire d="M88 122 H176" />
+      <Wire d="M88 228 H176" />
+      <Gate kind="and" x="188" y="80" width="112" height="70" />
+      <Gate kind="or" x="188" y="196" width="112" height="70" />
+      <Gate kind="xor" x="382" y="80" width="112" height="70" />
+      <Gate kind="not" x="394" y="204" width="78" height="54" />
+      <Wire d="M300 115 H382" arrowId={arrowId} />
+      <Wire d="M300 231 H394" arrowId={arrowId} />
+      <Wire d="M494 115 H620" arrowId={arrowId} />
+      <Wire d="M480 231 H620" arrowId={arrowId} />
+    </g>
+  );
+}
+
+function CompactHalfAdderDiagram({ arrowId }) {
+  return (
+    <g>
+      <Label x="58" y="116" anchor="start" size="14">A</Label>
+      <Label x="58" y="226" anchor="start" size="14">B</Label>
+      <Wire d="M86 112 H172" />
+      <Wire d="M86 222 H172" />
+      <Wire d="M172 112 C216 112 220 98 264 98" />
+      <Wire d="M172 222 C216 222 220 144 264 144" />
+      <Wire d="M172 112 C216 112 220 236 264 236" />
+      <Wire d="M172 222 C216 222 220 276 264 276" />
+      <Gate kind="xor" x="264" y="72" width="118" height="90" />
+      <Gate kind="and" x="264" y="218" width="118" height="76" />
+      <Wire d="M382 117 H574" arrowId={arrowId} />
+      <Wire d="M382 256 H574" arrowId={arrowId} />
+      <Label x="600" y="123" anchor="start" size="14">SUM</Label>
+      <Label x="600" y="262" anchor="start" size="14">Carry</Label>
+    </g>
+  );
+}
+
+function CompactFullAdderDiagram({ arrowId }) {
+  return (
+    <g>
+      <Label x="58" y="112" anchor="start" size="13">A</Label>
+      <Label x="58" y="174" anchor="start" size="13">B</Label>
+      <Label x="58" y="286" anchor="start" size="13">Cin</Label>
+      <Wire d="M90 108 H168" />
+      <Wire d="M90 170 H168" />
+      <Block x="168" y="80" width="96" height="78" label="HA1" />
+      <Wire d="M264 119 H350" arrowId={arrowId} />
+      <Block x="350" y="80" width="96" height="78" label="HA2" />
+      <Wire d="M90 282 H350" />
+      <Wire d="M446 119 H584" arrowId={arrowId} />
+      <Label x="608" y="125" anchor="start" size="14">SUM</Label>
+      <Gate kind="or" x="500" y="214" width="110" height="82" />
+      <Wire d="M264 150 C306 150 318 238 500 238" />
+      <Wire d="M446 150 C486 150 486 270 500 270" />
+      <Wire d="M610 255 H654" arrowId={arrowId} />
+      <Label x="662" y="261" anchor="start" size="14">Cout</Label>
+    </g>
+  );
+}
+
+function CompactFourBitAdderDiagram({ arrowId }) {
+  const blocks = [138, 268, 398, 528];
+
+  return (
+    <g>
+      <Label x="58" y="108" anchor="start" size="13">A[3:0]</Label>
+      <Label x="58" y="176" anchor="start" size="13">B[3:0]</Label>
+      <Label x="58" y="266" anchor="start" size="13">Cin</Label>
+      <Wire d="M104 104 H640" />
+      <Wire d="M104 172 H640" />
+      <Wire d="M104 262 H138" />
+      {blocks.map((x, index) => (
+        <g key={x}>
+          <Block x={x} y="116" width="82" height="72" label={`FA${index}`} />
+          <Wire d={`M${x - 34} 104 H${x}`} width="2.5" />
+          <Wire d={`M${x - 34} 172 H${x}`} width="2.5" />
+          <Wire d={`M${x + 41} 116 V88`} arrowId={arrowId} width="2.5" />
+          <Label x={x + 41} y="82" size="10" muted>S{index}</Label>
+          {index < blocks.length - 1 && <Wire d={`M${x + 82} 152 H${blocks[index + 1]}`} arrowId={arrowId} width="2.5" />}
+        </g>
+      ))}
+      <Wire d="M610 152 H660" arrowId={arrowId} />
+      <Label x="668" y="158" anchor="start" size="13">Cout</Label>
+      <Label x="360" y="304" size="13" muted>Carry mengalir dari LSB ke MSB</Label>
+    </g>
+  );
+}
+
+function CompactSubtractorDiagram({ arrowId }) {
+  return (
+    <g>
+      <Label x="58" y="110" anchor="start" size="14">A</Label>
+      <Label x="58" y="220" anchor="start" size="14">B</Label>
+      <Wire d="M90 106 H286" arrowId={arrowId} />
+      <Wire d="M90 216 H156" />
+      <Gate kind="not" x="156" y="190" width="66" height="52" />
+      <Wire d="M230 216 H286" arrowId={arrowId} />
+      <Block x="286" y="140" width="142" height="106" label="4-bit ADD" />
+      <Wire d="M176 292 H286" />
+      <Label x="118" y="298" anchor="start" size="13">Cin = 1</Label>
+      <Wire d="M428 193 H586" arrowId={arrowId} />
+      <Label x="610" y="199" anchor="start" size="14">A - B</Label>
+      <Label x="356" y="284" size="13" muted>A + NOT(B) + 1</Label>
+    </g>
+  );
+}
+
+function CompactMultiplexerDiagram({ arrowId }) {
+  return (
+    <g>
+      {['I0', 'I1', 'I2', 'I3'].map((input, index) => {
+        const y = 84 + index * 54;
+        return (
+          <g key={input}>
+            <Label x="70" y={y + 5} anchor="start" size="13">{input}</Label>
+            <Wire d={`M110 ${y} H296`} />
+          </g>
+        );
+      })}
+      <Mux x="296" y="56" width="140" height="250" />
+      <Wire d="M366 332 V306" />
+      <Label x="366" y="348" size="13">S1S0</Label>
+      <Wire d="M436 181 H606" arrowId={arrowId} />
+      <Label x="628" y="187" anchor="start" size="14">OUT</Label>
+    </g>
+  );
+}
+
+function CompactAluDiagram({ arrowId }) {
+  return (
+    <g>
+      <Label x="58" y="112" anchor="start" size="13">A</Label>
+      <Label x="58" y="230" anchor="start" size="13">B</Label>
+      <Wire d="M86 108 H150" />
+      <Wire d="M86 226 H150" />
+      <Gate kind="and" x="180" y="62" width="88" height="58" />
+      <Gate kind="or" x="180" y="136" width="88" height="58" />
+      <Block x="180" y="214" width="88" height="58" label="ADD" />
+      <Block x="180" y="286" width="88" height="58" label="SUB" />
+      <Wire d="M268 91 H410" />
+      <Wire d="M268 165 H410" />
+      <Wire d="M268 243 H410" />
+      <Wire d="M268 315 H410" />
+      <Mux x="410" y="72" width="136" height="250" />
+      <Wire d="M546 197 H640" arrowId={arrowId} />
+      <Label x="652" y="203" anchor="start" size="14">OUT</Label>
+      <Label x="480" y="348" size="12" muted>opcode</Label>
     </g>
   );
 }
